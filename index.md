@@ -1,7 +1,7 @@
 ---
 layout: workshop      # DON'T CHANGE THIS.
 carpentry: "dc"    # what kind of Carpentry (must be either "lc" or "dc" or "swc")
-venue: "Smithsonian Instituion, National Museum of Natural History"        # brief name of host site without address (e.g., "Euphoric State University")
+venue: "Data Carpentry Genomics at NMNH"        # brief name of host site without address (e.g., "Euphoric State University")
 address: "10th St NW and Constitution Ave NW,  Washington DC"      # full street address of workshop (e.g., "Room A, 123 Forth Street, Blimingen, Euphoria")
 country: "us"      # lowercase two-letter ISO country code such as "fr" (see https://en.wikipedia.org/wiki/ISO_3166-1)
 language: "en"     # lowercase two-letter ISO language code such as "fr" (see https://en.wikipedia.org/wiki/ISO_639-1)
@@ -97,6 +97,11 @@ eventbrite:           # optional: alphanumeric key for Eventbrite registration, 
 </p>
 {% endif %}
 
+<p id='room'>
+<strong>Room: </strong>
+WG 33
+</p>
+
 {% comment %}
   DATE
 
@@ -106,6 +111,7 @@ eventbrite:           # optional: alphanumeric key for Eventbrite registration, 
 <p id="when">
   <strong>When:</strong>
   {{page.humandate}}.
+  <strong>Attendees must attend entire workshop.</strong>
   {% include workshop_calendar.html %}
 </p>
 {% endif %}
@@ -118,7 +124,7 @@ eventbrite:           # optional: alphanumeric key for Eventbrite registration, 
 <p id="requirements">
   <strong>Requirements:</strong> Participants must bring a laptop with a
   Mac, Linux, or Windows operating system (not a tablet, Chromebook, etc.) that they have administrative privileges
-  on. They should have a few specific software packages installed (listed
+  on. <strong>This computer must be able to connect to the Smithsonian's SI-Staff wifi network which requires an SI network account.</strong>They should have a few specific software packages installed (listed
   <a href="#setup">below</a>). They are also required to abide by
   {% if page.carpentry == "swc" %}
   Software Carpentry's
@@ -181,12 +187,12 @@ eventbrite:           # optional: alphanumeric key for Eventbrite registration, 
 
 <hr/>
 
-{% comment %} 
- SURVEYS - DO NOT EDIT SURVEY LINKS 
+{% comment %}
+ SURVEYS - DO NOT EDIT SURVEY LINKS
 {% endcomment %}
 <h2 id="surveys">Surveys</h2>
 
-{% if page.carpentry == "swc" %} 
+{% if page.carpentry == "swc" %}
 <p>Please be sure to complete these surveys before and after the workshop.</p>
 <p><a href="{{ site.swc_pre_survey }}{{ site.github.project_title }}">Pre-workshop Survey</a></p>
 <p><a href="{{ site.swc_post_survey }}{{ site.github.project_title }}">Post-workshop Survey</a></p>
@@ -629,9 +635,9 @@ eventbrite:           # optional: alphanumeric key for Eventbrite registration, 
         from <a href="https://cran.r-project.org/index.html">CRAN</a>.
         Also, please install the
         <a href="https://www.rstudio.com/ide/download/desktop/#download">RStudio IDE</a>.
-        Note that if you have separate user and admin accounts, you should run the 
-        installers as administrator (right-click on .exe file and select "Run as 
-        administrator" instead of double-clicking). Otherwise problems may occur later, 
+        Note that if you have separate user and admin accounts, you should run the
+        installers as administrator (right-click on .exe file and select "Run as
+        administrator" instead of double-clicking). Otherwise problems may occur later,
         for example when installing R packages.
       </p>
     </div>
