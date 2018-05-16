@@ -393,8 +393,8 @@ WG 33
       <h4 id="terminal-windows">Windows</h4>
       <p>
         The Windows terminal emulator we recommend is PuTTY.
-        The installer for PuTTY can be found here:
-        < a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html">https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html</a>.
+        The installer for PuTTY can be found on the
+        <a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html">Putty download page</a>.
         For most Windows systems (64-bit) you'll want "putty-64bit-0.XX-installer.msi".
         If yo don't have admin privileges to your Windows system, you can download "putty.exe"
         which can be run directly without admin rights.
