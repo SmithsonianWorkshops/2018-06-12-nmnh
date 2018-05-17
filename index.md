@@ -124,7 +124,7 @@ WG 33
 <p id="requirements">
   <strong>Requirements:</strong> Participants must bring a laptop with a
   Mac, Linux, or Windows operating system (not a tablet, Chromebook, etc.) that they have administrative privileges
-  on. <strong>This computer must be able to connect to the Smithsonian's SI-Staff wifi network which requires an SI network account.</strong>They should have a few specific software packages installed (listed
+  on. <strong>This computer must be able to connect to the Smithsonian's SI-Staff wifi network which requires an SI network account.</strong> They should have a few specific software packages installed (listed
   <a href="#setup">below</a>). They are also required to abide by
   {% if page.carpentry == "swc" %}
   Software Carpentry's
@@ -242,34 +242,6 @@ WG 33
 
 <hr/>
 
-{% comment %}
-  SYLLABUS
-
-  Show what topics will be covered.
-
-  1. If your workshop is R rather than Python, remove the comment
-     around that section and put a comment around the Python section.
-  2. Some workshops will delete SQL.
-  3. Please make sure the list of topics is synchronized with what you
-     intend to teach.
-  4. You may need to move the div's with class="col-md-6" around inside
-     the div's with class="row" to balance the multi-column layout.
-
-  This is one of the places where people frequently make mistakes, so
-  please preview your site before committing, and make sure to run
-  'tools/check' as well.
-{% endcomment %}
-<h2 id="syllabus">Syllabus</h2>
-
-{% if page.carpentry == "swc" %}
-  {% include sc/syllabus.html %}
-{% elsif page.carpentry == "dc" %}
-  {% include dc/syllabus.html %}
-{% elsif page.carpentry == "lc" %}
-  {% include lc/syllabus.html %}
-{% endif %}
-
-<hr/>
 
 {% comment %}
   SETUP
@@ -377,11 +349,11 @@ WG 33
 </div> {% comment %} End of 'editor' section. {% endcomment %}
 
 <div id="terminal"> {% comment %} Start of 'terminal' section. {% endcomment %}
-  <h3>Terminal emulator</h3>
+  <h3>Terminal Emulator</h3>
 
   <p>
     We'll be do much of the work in this workshop using the Smithsonian Hydra
-    computing cluster. The connection to Hydra is through a termainl emulator
+    computing cluster. The connection to Hydra is through a terminal emulator
     on your computer you will use to log into the system. Mac and Linux systems
     have a terminal emulator built-in. In Windows you'll need to download a
     program that allows connections via ssh. The built-in Windows command
@@ -408,7 +380,7 @@ WG 33
       </p>
     </div>
     <div class="col-md-4">
-      <h4 id="termainl-linux">Linux</h4>
+      <h4 id="terminal-linux">Linux</h4>
       <p>
       Look for a program called "Terminal" in your Linux system.
       </p>
@@ -416,6 +388,51 @@ WG 33
   </div>
 </div> {% comment %} End of 'terminal' section. {% endcomment %}
 
+<div id="transfer"> {% comment %} Start of 'transfer' section. {% endcomment %}
+  <h3>File Transfer Program</h3>
+
+  <p>
+    To assist transferring of files to the Hydra cluster, we suggest
+    installing a GUI based file transfer program that will transfer
+    using the <code>scp</code> or <code>sftp</code> protocols. The
+    program that is approved for use on Smithsonian computers is
+    <a href="https://filezilla-project.org/">Filezilla</a>.
+  </p>
+
+  <div class="row">
+    <div class="col-md-4">
+      <h4 id="transfer-windows">Windows</h4>
+      <p>
+      <ol>
+      <li>Go to the <a href="https://filezilla-project.org/download.php?show_all=1">FileZilla download page</a></li>
+      <li>For most Windows systems (64-bit), choose the download "FileZilla_3.XX.0_win64-setup.exe" (XX will be the value of the current release).</li>
+      <li>Run the installer which will require you having administrative access to your comptuer.</li>
+      <li>If you don't have an admin account on your comptuer: download and unzip the files "FileZilla_3.XX.0_win64.zip". The .exe files in this can be run without running an installer first.</li>
+      </ol>
+      </p>
+    </div>
+    <div class="col-md-4">
+      <h4 id="transfer-macosx">macOS</h4>
+      <p>
+      <ol>
+      <li>Go to the <a href="https://filezilla-project.org/download.php?show_all=1">FileZilla download page</a></li>
+      <li>Choose the download "FileZilla_3.XX.0_macosx-x86.app.tar.bz2 " (XX will be the value of the current release).</li>
+      <li>Extract the downloaded .tar.bz file by double clicking it if it wasn't automatically extracted.</li>
+      <li>[Optional] Move the FileZilla icon to your Applications folder.</li>
+      </ol>
+      </p>
+    </div>
+    <div class="col-md-4">
+      <h4 id="transfer-linux">Linux</h4>
+      <p>
+      <li>Go to the <a href="https://filezilla-project.org/download.php?show_all=1">FileZilla download page</a></li>
+      <li>Choose the download "FileZilla_3.XX.0_x86_64-linux-gnu.tar.bz2 " (XX will be the value of the current release).</li>
+      <li>Extract the downloaded .tar.bz file.</li>
+      <li>Run FileZilla by starting the <code>filezilla</code> executable in the bin directory.</li> 
+      </p>
+    </div>
+  </div>
+</div> {% comment %} End of 'transfer' section. {% endcomment %}
 
 <div id="python"> {% comment %} Start of 'Python' section. Remove the third paragraph if
            the workshop will teach Python using something other than
