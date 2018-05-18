@@ -376,7 +376,7 @@ WG 33
       <h4 id="terminal-macosx">macOS</h4>
       <p>
       The Mac Terinal program can be found in the Utilities directory inside of your
-      comptuer's Applications directory.
+      computer's Applications directory.
       </p>
     </div>
     <div class="col-md-4">
@@ -406,8 +406,8 @@ WG 33
       <ol>
       <li>Go to the <a href="https://filezilla-project.org/download.php?show_all=1">FileZilla download page</a></li>
       <li>For most Windows systems (64-bit), choose the download "FileZilla_3.XX.0_win64-setup.exe" (XX will be the value of the current release).</li>
-      <li>Run the installer which will require you having administrative access to your comptuer.</li>
-      <li>If you don't have an admin account on your comptuer: download and unzip the files "FileZilla_3.XX.0_win64.zip". The .exe files in this can be run without running an installer first.</li>
+      <li>Run the installer which will require you having administrative access to your computer.</li>
+      <li>If you don't have an admin account on your computer: download and unzip the files "FileZilla_3.XX.0_win64.zip". The .exe files in this can be run without running an installer first.</li>
       </ol>
       </p>
     </div>
