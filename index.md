@@ -46,6 +46,13 @@ eventbrite:           # optional: alphanumeric key for Eventbrite registration, 
 </iframe>
 {% endif %}
 
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSds70vg6-CCF_htWlbmin-_7GqGBRrUeemu8btxU-_pk1hd2w/viewform?embedded=true"    frameborder="0"
+  width="100%"
+  height="248px"
+  scrolling="auto">
+  Loading...
+</iframe>
+
 <h4>Data Carpentry for Genomics at NMNH</h4>
 
 <h2 id="general">General Information</h2>
