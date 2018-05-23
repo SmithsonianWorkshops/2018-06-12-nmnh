@@ -15,7 +15,7 @@ helper: ["Mirian Tsuchiya"]     # boxed, comma-separated list of helpers' names,
 email: ["SI-DataScience@si.edu"]    # boxed, comma-separated list of contact email addresses for the host, lead instructor, or whoever else is handling questions, like ["marlyn.wescoff@example.org", "fran.bilas@example.org", "ruth.lichterman@example.org"]
 collaborative_notes: http://pad.software-carpentry.org/2018-06-12-nmnh            # optional: URL for the workshop collaborative notes, e.g. an Etherpad or Google Docs document
 eventbrite:           # optional: alphanumeric key for Eventbrite registration, e.g., "1234567890AB" (if Eventbrite is being used)
-google_form:  # Remove this comment to make the Google Form live "https://docs.google.com/forms/d/e/1FAIpQLSds70vg6-CCF_htWlbmin-_7GqGBRrUeemu8btxU-_pk1hd2w/viewform?embedded=true" 
+google_form:  "https://docs.google.com/forms/d/e/1FAIpQLSds70vg6-CCF_htWlbmin-_7GqGBRrUeemu8btxU-_pk1hd2w/viewform?embedded=true" 
 ---
 
 {% comment %} See instructions in the comments below for how to edit specific sections of this workshop template. {% endcomment %}
@@ -191,6 +191,9 @@ WG 33
 <h2 id="registration">Registration</h2>
 
 {% if page.google_form %}
+<p>
+  <em>Please enter your information in the embedded Google Form below...</em>
+</p>
 <iframe
   src="{{page.google_form}}"
   frameborder="0"
