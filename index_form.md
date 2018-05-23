@@ -191,6 +191,9 @@ WG 33
 <h2 id="registration">Registration</h2>
 
 {% if page.google_form %}
+<p>
+  <em>Please enter your information in the embedded Google Form below...</em>
+</p>
 <iframe
   src="{{page.google_form}}"
   frameborder="0"
