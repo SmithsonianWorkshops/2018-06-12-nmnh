@@ -15,7 +15,7 @@ helper: ["Mirian Tsuchiya"]     # boxed, comma-separated list of helpers' names,
 email: ["SI-DataScience@si.edu"]    # boxed, comma-separated list of contact email addresses for the host, lead instructor, or whoever else is handling questions, like ["marlyn.wescoff@example.org", "fran.bilas@example.org", "ruth.lichterman@example.org"]
 collaborative_notes: http://pad.software-carpentry.org/2018-06-12-nmnh            # optional: URL for the workshop collaborative notes, e.g. an Etherpad or Google Docs document
 eventbrite:           # optional: alphanumeric key for Eventbrite registration, e.g., "1234567890AB" (if Eventbrite is being used)
-google_form:  "https://docs.google.com/forms/d/e/1FAIpQLSds70vg6-CCF_htWlbmin-_7GqGBRrUeemu8btxU-_pk1hd2w/viewform?embedded=true" 
+google_form:  "https://docs.google.com/forms/d/e/1FAIpQLSds70vg6-CCF_htWlbmin-_7GqGBRrUeemu8btxU-_pk1hd2w/viewform?embedded=true"
 ---
 
 {% comment %} See instructions in the comments below for how to edit specific sections of this workshop template. {% endcomment %}
@@ -348,7 +348,7 @@ WG 33
       </p>
       <p>
         Others editors that you can use are
-        <a href="https://www.barebones.com/products/textwrangler/">Text Wrangler</a> or
+        <a href="https://www.barebones.com/products/bbedit//">BBEdit (free version is fine)</a> or
         <a href="https://www.sublimetext.com/">Sublime Text</a>.
       </p>
     </div>
@@ -448,7 +448,7 @@ WG 33
       <li>Go to the <a href="https://filezilla-project.org/download.php?show_all=1">FileZilla download page</a></li>
       <li>Choose the download "FileZilla_3.XX.0_x86_64-linux-gnu.tar.bz2 " (XX will be the value of the current release).</li>
       <li>Extract the downloaded .tar.bz file.</li>
-      <li>Run FileZilla by starting the <code>filezilla</code> executable in the bin directory.</li> 
+      <li>Run FileZilla by starting the <code>filezilla</code> executable in the bin directory.</li>
       </p>
     </div>
   </div>
