@@ -1,5 +1,6 @@
 ---
 title: "Assessing Read Quality"
+start: true
 teaching: 30
 exercises: 20
 questions:
