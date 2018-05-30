@@ -37,7 +37,6 @@ $ cd /pool/genomics/YOURUSERNAME/dc_workshop
 $ cp -r /data/genomics/workshops/data_carpentry_genomics/dc_sampledata_lite/ref_genome/ data/
 $ cp -r /data/genomics/workshops/data_carpentry_genomics/dc_sampledata_lite/trimmed_fastq_small/ data/
 ~~~
-{: .bash}
 
 You will also need to create directories for the results that will be generated as part of this workflow. We can do this in a single
 line of code because `mkdir` can accept multiple new directory
@@ -46,7 +45,6 @@ names as input.
 ~~~
 $ mkdir -p results/sai results/sam results/bam results/bcf results/vcf
 ~~~
-{: .bash}
 
 
 > ## Loading modules
@@ -57,7 +55,7 @@ $ mkdir -p results/sai results/sam results/bam results/bcf results/vcf
 > Today we are working on the interactive node (that you called using qrsh),
 > but you could also submit jobs using qsub.
 >
-{: .callout}
+
 
 ### Index the reference genome
 Our first step is to index the reference genome for use by BWA. This 
@@ -67,13 +65,12 @@ helps speed up our alignment.
 > Indexing the reference only has to be run once. The only reason you would
 > want to create a new index is if you are working with a different reference  
 > genome or you are using a different tool for alignment.
-{: .callout}
 
 ~~~
 $ module load bioinformatics/bwa
 $ bwa index data/ref_genome/ecoli_rel606.fasta
 ~~~
-{: .bash}
+
 
 While the index is created, you will see output something like this:
 
@@ -88,7 +85,7 @@ While the index is created, you will see output something like this:
 [main] CMD: bwa index data/ref_genome/ecoli_rel606.fasta
 [main] Real time: 1.736 sec; CPU: 1.688 sec
 ~~~
-{: .output}
+
 
 ### Align reads to reference genome
 
@@ -103,7 +100,7 @@ Since we are working with short reads we will be using BWA-backtrack. The genera
 ~~~
 $ bwa aln ref_genome.fasta input_file.fastq > output_file.sai
 ~~~
-{: .bash}
+
 
 This will create a `.sai` file which is an intermediate file containing the suffix array indexes. 
     
@@ -118,7 +115,7 @@ iterating this whole process on all of our sample files.
 ~~~
 $ bwa aln data/ref_genome/ecoli_rel606.fasta data/trimmed_fastq_small/SRR097977.fastq_trim.fastq > results/sai/SRR097977.aligned.sai
 ~~~
-{: .bash}
+
 
 You will see output that starts like this: 
 
@@ -134,7 +131,7 @@ You will see output that starts like this:
 [bwa_aln_core] calculate SA coordinate... 5.10 sec
 [bwa_aln_core] write to the disk... 0.02 sec
 ~~~
-{: .output}
+
 
 ## Alignment cleanup
 
@@ -174,7 +171,7 @@ First we will use the `bwa samse` command to convert the .sai file to SAM format
 ~~~
 $ bwa samse ref_genome.fasta input_file.sai input_file.fastq > output_file.sam
 ~~~
-{: .bash}
+
 
 The code in our case will look like: 
 
@@ -184,7 +181,7 @@ $ bwa samse data/ref_genome/ecoli_rel606.fasta \
         data/trimmed_fastq_small/SRR097977.fastq_trim.fastq > \
         results/sam/SRR097977.aligned.sam
 ~~~
-{: .bash}
+
 
 Your output will start out something like this: 
 
@@ -194,7 +191,7 @@ Your output will start out something like this:
 [bwa_aln_core] print alignments... 0.37 sec
 [bwa_aln_core] 262144 sequences have been processed.
 ~~~
-{: .output}
+
 
 
 > ## Multiple line commands
@@ -202,7 +199,7 @@ Your output will start out something like this:
 > When typing a long command into your terminal, you can use the `\` character
 > to separate code chunks onto separate lines. This can make your code more readable.
 >
-{: .callout}
+
 
 Next we convert the SAM file to BAM format for use by downstream tools. We use the `samtools` program with the `view` command and tell this command that the input is in SAM format (`-S`) and to output BAM format (`-b`): 
 
@@ -210,7 +207,7 @@ Next we convert the SAM file to BAM format for use by downstream tools. We use t
 $ module load bioinformatics/samtools
 $ samtools view -S -b results/sam/SRR097977.aligned.sam > results/bam/SRR097977.aligned.bam
 ~~~
-{: .bash}
+
 
 
 ### Sort BAM file by coordinates
@@ -220,14 +217,14 @@ Next we sort the BAM file using the `sort` command from `samtools`. Note that as
 ~~~
 $ samtools sort results/bam/SRR097977.aligned.bam > results/bam/SRR097977.aligned.sorted.bam
 ~~~
-{: .bash}
+
 
 
 > ## More Than One Way to . . . sort a SAM/BAM File
 > SAM/BAM files can be sorted in multiple ways, e.g. by location of alignment on the chromosome, by read name, etc. It is important
 > to be aware that different alignment tools will output differently sorted SAM/BAM, and different downstream tools require 
 > differently sorted alignment files as input.*
-{: .callout}
+>
 
 ## Variant calling
 
@@ -248,14 +245,14 @@ Do the first pass on variant calling by counting read coverage with samtools
 $ samtools mpileup -g -f data/ref_genome/ecoli_rel606.fasta \
             results/bam/SRR097977.aligned.sorted.bam > results/bcf/SRR097977_raw.bcf
 ~~~
-{: .bash}
+
 
 ~~~
 [fai_load] build FASTA index.
 [mpileup] 1 samples in 1 input files
 <mpileup> Set max per-file depth to 8000
 ~~~
-{: .output}
+
 
 We have now generated a file with coverage information for every base. To identify variants, we now will use a different tool from the samtools suite called [bcftools](https://samtools.github.io/bcftools/bcftools.html).
 
@@ -267,7 +264,7 @@ Identify SNPs using bcftools:
 $ module load bioinformatics/bcftools
 $ bcftools call -vm -O b results/bcf/SRR097977_raw.bcf > results/bcf/SRR097977_variants.bcf
 ~~~
-{: .bash}
+
 
 
 ### Step 3: Filter and report the SNP variants in variant calling format (VCF)
@@ -278,7 +275,7 @@ Filter the SNPs for the final output in VCF format, using `vcfutils.pl`:
 $ bcftools view results/bcf/SRR097977_variants.bcf | \
 $ vcfutils.pl varFilter - > results/vcf/SRR097977_final_variants.vcf
 ~~~
-{: .bash}
+
 
 `bcftools view` converts the binary format of bcf files into human readable format (tab-delimited) for `vcfutils.pl` to perform
 the filtering. Note that the output is in VCF format, which is a text format.
@@ -288,7 +285,7 @@ the filtering. Note that the output is in VCF format, which is a text format.
 ~~~
 $ less results/vcf/SRR097977_final_variants.vcf
 ~~~
-{: .bash}
+
 
 You will see the header (which describes the format), the time and date the file was
 created, the version of bcftools that was used, the command line parameters used, and 
@@ -335,7 +332,7 @@ NC_012967.1     216480  .       C       T       62      .       DP=4;VDB=0.23576
 NC_012967.1     247796  .       T       C       58      .       DP=3;VDB=0.102722;SGB=-0.511536;MQSB=1;MQ0F=0;AC=2;AN=2;DP4=0,0,1,2;MQ=33       GT:PL   1/1:88,9,0
 NC_012967.1     281923  .       G       T       38.415  .       DP=2;VDB=0.06;SGB=-0.453602;MQSB=1;MQ0F=0;AC=2;AN=2;DP4=0,0,1,1;MQ=37   GT:PL   1/1:68,6,0
 ~~~
-{: .output}
+
 
 This is a lot of information, so let's take some time to make sure we understand our output.
 
@@ -384,7 +381,6 @@ to learn more about VCF file format.
 >> ~~~
 >> $ cut results/vcf/SRR097977_final_variants.vcf -f 6,2 | grep -v "##" | less
 >> ~~~
->> {: .bash}
 >> 
 >> ~~~ 
 >> POS     QUAL
@@ -403,7 +399,6 @@ to learn more about VCF file format.
 >> .
 >> .
 >> ~~~
->> {: .output}
 >>
 >> Position 911613 has a score of 3.88886.
 > {: .solution}
@@ -423,7 +418,6 @@ In order for us to visualize the alignment files, we will need to index the BAM 
 ~~~
 $ samtools index results/bam/SRR097977.aligned.sorted.bam
 ~~~
-{: .bash}
 
 ### Viewing with `tview`
 
@@ -436,7 +430,6 @@ In order to visualize our mapped reads we use `tview`, giving it the sorted bam 
 ~~~
 $ samtools tview results/bam/SRR097977.aligned.sorted.bam data/ref_genome/ecoli_rel606.fasta
 ~~~
-{: .bash}
 
 ~~~
 1         11        21        31        41        51        61        71        81        91        101       111       121
@@ -464,7 +457,7 @@ AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGCTTCTGAACTG
 .................................... ,,,,,,,,,,,,,,,,,,a,,,,,,,,,,,,,,,,,        ,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,  ............................ ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ~~~
-{: .output}
+
 
 The first line of output shows the genome coordinates in our reference genome. The second line shows the reference
 genome sequence. The third lines shows the consensus sequence determined from the sequence reads. A `.` indicates
@@ -489,7 +482,7 @@ instead organize files within a directory structure like we've been using in our
 $ mkdir ~/Desktop/files_for_igv
 $ cd ~/Desktop/files_for_igv
 ~~~
-{: .bash}
+
 
 Now we will transfer our files to that new directory. Remember to replace the text between the `@` and the `:` 
 with your AWS instance number. The commands to `scp` always go in the terminal window that is connected to your
@@ -501,7 +494,7 @@ $ scp YOURUSERNAME@hydra-login01.si.edu:/pool/genomics/YOURUSERNAME/dc_workshop/
 $ scp YOURUSERNAME@hydra-login01.si.edu:/pool/genomics/YOURUSERNAME/dc_workshop/data/ref_genome/ecoli_rel606.fasta ~/Desktop/files_for_igv
 $ scp YOURUSERNAME@hydra-login01.si.edu:/pool/genomics/YOURUSERNAME/dc_workshop/results/vcf/SRR097977_final_variants.vcf ~/Desktop/files_for_igv
 ~~~
-{: .bash}
+
 
 You will need to type your Hydra password each time you call `scp`. 
 
@@ -514,7 +507,7 @@ $ scp YOURUSERNAME@hydra-login01.si.edu:'/scratch/genomics/YOURUSERNAME/dc_works
 ~/Desktop/files_for_igv/
 
 ~~~
-{: .bash}
+
 
 
 Next we need to open the IGV software. If you haven't done so already, you can download IGV from the [Broad Institute's software page](https://www.broadinstitute.org/software/igv/download), double-click the `.zip` file
