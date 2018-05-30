@@ -31,21 +31,13 @@ filter poor quality reads and trim poor quality bases from our samples.
 
 ## Trimmomatic Options
 
-Trimmomatic is a program written in the Java programming language.
-You don't need to learn Java to use Trimmomatic (FastQC is also
-written in Java), but the fact that it's a Java program helps
-explain the syntax that is used to run Trimmomatic. The basic
-command to run Trimmomatic starts like this:
+To use Trimmomatic on Hydra, load the trimmomatic module with:
 
 ~~~
-$ java -jar trimmomatic-0.32.jar
+$ module load bioinformatics/trimmomatic
 ~~~
 {: .bash}
 
-`java` tells our computer that we're running a Java program. `-jar`
-is an option specifying that we're going to specify the location of
-the Java program we want to run. The Java program itself will have
-a `.jar` file extension.
 
 On Hydra, we start trimmomatic with a shortcut that is available when
 you load the bioinformatics/trimmomatic module: `runtrimmomatic`.
@@ -53,6 +45,24 @@ This shortcut has the `java -jar` and the full path to the jar file
 incorporated as well as some other java options that help 
 trimmomatic run well on Hydra. You can type `alias runtrimmomatic` to
 what the command expands to or you can type `module help bioinformatics/trimmomatic`.
+
+
+~~~
+$ runtrimmomatic
+~~~
+{: .bash}
+
+
+Note: `runtrimmomatic` is a command you'll only see on Hydra. On other systems,
+Trimmomatic is called with `java -jar trimmomatic-0.32.jar`.
+Trimmomatic is a program written in the Java programming language.
+You don't need to learn Java to use Trimmomatic (FastQC is also
+written in Java), but the fact that it's a Java program helps
+explain the syntax that is used to run Trimmomatic.  `java` tells our
+computer that we're running a Java program. `-jar`
+is an option specifying that we're going to specify the location of
+the Java program we want to run. The Java program itself will have
+a `.jar` file extension.
 
 That's just the basic command, however. Trimmomatic has a variety of
 options and parameters. We will need to specify what options we want
@@ -94,7 +104,7 @@ $ runtrimmomatic SE
 However, a complete command for Trimmomatic will look something like this:
 
 ~~~
-$ runtrimmomatic SE -threads 4 -phred64 SRR_1056.fastq SRR_1056_trimmed.fastq ILLUMINACLIP:SRR_adapters.fa SLIDINGWINDOW:4:20
+$ runtrimmomatic SE -threads <TBD> -phred64 SRR_1056.fastq SRR_1056_trimmed.fastq ILLUMINACLIP:SRR_adapters.fa SLIDINGWINDOW:4:20
 ~~~
 {: .bash}
 
@@ -306,7 +316,7 @@ to a new subdirectory within our `data/` directory. We can also remove
 our extra, double-trimmed file for the `SRR098283` sample.
 
 ~~~
-$ cd ~/dc_workshop/data/untrimmed_fastq
+$ cd /pool/genoimcs/USER/dc_workshop/data/untrimmed_fastq
 $ mkdir ../trimmed_fastq
 $ rm SRR098283.fastq_trim.fastq_trim.fastq
 $ mv *_trim* ../trimmed_fastq
@@ -332,10 +342,10 @@ SRR098027.fastq_trim.fastq  SRR098283.fastq_trim.fastq
 >
 >> ## Solution
 >>
->> In your AWS terminal window do:
+>> On Hydra window do:
 >>
 >> ~~~
->> $ ~/FastQC/fastqc ~/dc_workshop/data/trimmed_fastq
+>> $ fastqc ~/dc_workshop/data/trimmed_fastq
 >> ~~~
 >> {: .bash}
 >>
@@ -343,13 +353,11 @@ SRR098027.fastq_trim.fastq  SRR098283.fastq_trim.fastq
 >>
 >> ~~~
 >> $ mkdir ~/Desktop/fastqc_html/trimmed
->> $ scp dcuser@hydra-login01:~/dc_workshop/data/trimmed_fastq/*.html ~/Desktop/fastqc_html/trimmed
+>> $ scp USER@hydra-login01:/pool/genomics/USER/dc_workshop/data/trimmed_fastq/*.html ~/Desktop/fastqc_html/trimmed
 >> $ open ~/Desktop/fastqc_html/trimmed/*.html
 >> ~~~
 >> {: .bash}
 >>
->> Remember to replace everything between the `@` and `:` in your scp
->> command with your AWS instance number.
 >>
 >> Before trimming, one of the sequences gave a warning and another
 >> failed the per base sequence quality test. After filtering, all
