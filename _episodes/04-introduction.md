@@ -61,41 +61,54 @@ by manipulating some experimental data. Some of the data we're going to be worki
 we're also going to be using several bioinformatics packages in later
 lessons to work with this data. To avoid having to spend time 
 downloading the data and downloading and installing all of the software,
-we're going to be working with data on a remote server. 
+we're going to be working with data on Hydra. 
 
-You can log-in to the remote server using the instructions 
-[here](http://www.datacarpentry.org/cloud-genomics/02-logging-onto-cloud/#logging-onto-a-cloud-instance). 
-Your instructor will supply the ip_address and password that you need to login.
-
-Each of you will have a different ip_address. This will 
-prevent us from accidentally changing each other's files as we work through the
-exercises. The password will be the same for everyone. 
+You can log-in to Hydra using the instructions 
+[here](https://confluence.si.edu/display/HPC/Logging+into+Hydra).  
 
 After loging on, you will see a screen showing something like this: 
 
 ~~~
-Welcome to Ubuntu 14.04.3 LTS (GNU/Linux 3.13.0-48-generic x86_64)
+Last login: Wed May 30 09:27:19 2018 from nmnh-l31266.us.sinet.si.edu
+---------------------------------------------------------------------------
+ Welcome to the SI/HPC cluster Hydra-4 (Rocks 6.2/SideWinder, CentOS 6.9)
+---------------------------------------------------------------------------
+This is one of the two login nodes.
 
- * Documentation:  https://help.ubuntu.com/
+ +======================================================================+
+ |                                                                      |
+ | You must change your password every 90 days.                         |
+ | Your account will be locked if it is inactive for 90+14 days,        |
+ |   read https://confluence.si.edu/display/HPC/Changing+your+password  |
+ |                                                                      |
+ +======================================================================+
 
-  System information as of Wed Oct 25 21:24:00 UTC 2017
+---------------------------------------------------------------------------
 
-  System load:  0.0                Processes:           147
-  Usage of /:   48.6% of 98.30GB   Users logged in:     0
-  Memory usage: 28%                IP address for eth0: 172.31.30.246
-  Swap usage:   0%
+  May 16 2018 
 
-  Graph this data and manage this system at:
-    https://landscape.canonical.com/
+  We are very pleased to announce that the systems administrator duties for
+  Hydra are being transferred to Dr. Jamal Uddin, who just joined the Research
+  Computing team at the Herndon Data Center (HDC). From now on he will be
+  responsible for administering and maintaining the HPC resources at HDC
+  (i.e. Hydra, full time).
 
-  Get cloud support with Ubuntu Advantage Cloud Guest:
-    http://www.ubuntu.com/business/services/cloud
+  We ask that you to submit HPC sys-admin related issues to SI-HPC-Admin@si.edu.
+  Bioinformatic/Genomics specific questions/requests should besend to
+  SI-HPC@si.edu, SAO users who need help for their applications should contact
+  Sylvain at hpc@cfa.harvard.edu.
 
-483 packages can be updated.
-322 updates are security updates.
+Reminders: 
+  + An interactive queue has been added to Hydra, interactive use of the
+    login nodes is being monitored.
+  + All public disks (/pool and /scratch only) are scrubbed. Reasonable
+    requests to restore scrubbed files must be sent no later than the
+    Friday following the scrubbing, by 5pm.
+  + Two test queues are available:
+     - uTSSD.tq - allows use of a local SSD for jobs performing heavy I/Os,
+     - uTGPU.tq - allows use of a GPU for code built with GPU capability,
+    Please contact us if you'd like to use either.
 
-
-Last login: Wed Oct 25 21:24:02 2017 from 104.220.130.189
 ~~~
 {: .output}
 
@@ -150,8 +163,8 @@ i.e.,
 the directory that the computer assumes we want to run commands in
 unless we explicitly specify something else.
 Here,
-the computer's response is `/home/dcuser`,
-which is the top level directory within our cloud system:
+the computer's response is `/home/USER`,
+which is your home directory:
 
 ~~~
 $ pwd
@@ -159,27 +172,30 @@ $ pwd
 {: .bash}
 
 ~~~
-/home/dcuser
+/home/USER
 ~~~
 {: .output}
 
 Let's look at how our file system is organized.  
 
-At the top is our `dcuser` directory, which holds all the 
-subdirectories and files.
+On Hydra, we ask that users run jobs from their `/pool`, `/scratch`, or `/data` directories (e.g. `/pool/genomics/USER`). 
 
-Inside that directory are some other directories:
+We will be using files located in `/data/genomics/workshops/data_carpentry_genomics`
+
+You can copy the files to your space by first navigating to your /pool/genomics or /pool/biology directory (e.g. `/pool/genomics/dikowr`)
+The command to change locations in our file system is `cd` followed by a
+directory name to change our working directory.
+`cd` stands for "change directory".
+
+and then using `cp -r`, which stands for copy recursively (i.e. the whole directory).
 
 ~~~
-dc_sample_data	FastQC	Trimmomatic-0.32
+cp -r /data/genomics/workshops/data_carpentry_genomics/dc_sample_data .
+
 ~~~
 {: .output}
 
 We'll be working with these subdirectories throughout this workshop.  
-
-The command to change locations in our file system is `cd` followed by a
-directory name to change our working directory.
-`cd` stands for "change directory".
 
 Let's say we want to navigate to the `dc_sample_data` directory we saw above.  We can
 use the following command to get there:
