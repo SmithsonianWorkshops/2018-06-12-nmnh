@@ -35,8 +35,8 @@ First we will link in the reference genome data into our `data/` directory. `ln`
 Although copying our data would accomplish something similar, this way, the data only lives in one place on our hard drive, thereby taking up less space. This becomes important when your files become very large. Symbolic links allow you to have the data in one location on your hard drive, but call it from many. 
 
 ~~~
-$ cd ~/dc_workshop
-$ ln -s ~/.dc_sampledata_lite/ref_genome/ data/
+$ cd /pool/genomics/YOURUSERNAME/dc_workshop
+$ ln -s /data/genomics/workshops/data_carpentry_genomics/dc_sampledata_lite/ref_genome/ data/
 ~~~
 {: .bash}
 
@@ -44,7 +44,7 @@ We will also link in a set of trimmed FASTQ files to work with. These are small 
 and will enable us to run our variant calling workflow quite quickly. 
 
 ~~~
-$ ln -s ~/.dc_sampledata_lite/trimmed_fastq_small/ data/
+$ ln -s /data/genomics/workshops/data_carpentry_genomics/dc_sampledata_lite/trimmed_fastq_small/ data/
 ~~~
 {: .bash}
 
@@ -58,16 +58,14 @@ $ mkdir -p results/sai results/sam results/bam results/bcf results/vcf
 {: .bash}
 
 
-> ## Installing Software
+> ## Loading modules
 > 
 > It's worth noting here that all of the software we are using for
-> this workshop has been pre-installed on our remote computer. 
-> This saves us a lot of time - installing software can be a 
-> time-consuming and frustrating task - however, this does mean that
-> you won't be able to walk out the door and start doing these
-> analyses on your own computer. You'll need to install 
-> the software first. Look at the [setup instructions](http://www.datacarpentry.org/wrangling-genomics/setup/) for more information on installing these software packages.
-> 
+> this workshop has been pre-installed on Hydra. 
+> You'll need to load the software modules first. 
+> Today we are working on the interactive node (that you called using qrsh),
+> but you could also submit jobs using qsub.
+>
 {: .callout}
 
 ### Index the reference genome
@@ -81,6 +79,7 @@ helps speed up our alignment.
 {: .callout}
 
 ~~~
+$ module load bioinformatics/bwa
 $ bwa index data/ref_genome/ecoli_rel606.fasta
 ~~~
 {: .bash}
@@ -217,6 +216,7 @@ Your output will start out something like this:
 Next we convert the SAM file to BAM format for use by downstream tools. We use the `samtools` program with the `view` command and tell this command that the input is in SAM format (`-S`) and to output BAM format (`-b`): 
 
 ~~~
+$ module load bioinformatics/samtools
 $ samtools view -S -b results/sam/SRR097977.aligned.sam > results/bam/SRR097977.aligned.bam
 ~~~
 {: .bash}
@@ -281,6 +281,7 @@ We have now generated a file with coverage information for every base. To identi
 Identify SNPs using bcftools:
 
 ~~~
+$ module load bioinformatics/bcftools
 $ bcftools view -bvcg results/bcf/SRR097977_raw.bcf > results/bcf/SRR097977_variants.bcf
 ~~~
 {: .bash}
@@ -511,14 +512,14 @@ with your AWS instance number. The commands to `scp` always go in the terminal w
 local computer (not your AWS instance).
 
 ~~~
-$ scp dcuser@ec2-34-203-203-131.compute-1.amazonaws.com:~/dc_workshop/results/bam/SRR097977.aligned.sorted.bam ~/Desktop/files_for_igv
-$ scp dcuser@ec2-34-203-203-131.compute-1.amazonaws.com:~/dc_workshop/results/bam/SRR097977.aligned.sorted.bam.bai ~/Desktop/files_for_igv
-$ scp dcuser@ec2-34-203-203-131.compute-1.amazonaws.com:~/dc_workshop/data/ref_genome/ecoli_rel606.fasta ~/Desktop/files_for_igv
-$ scp dcuser@ec2-34-203-203-131.compute-1.amazonaws.com:~/dc_workshop/results/vcf/SRR097977_final_variants.vcf ~/Desktop/files_for_igv
+$ scp YOURUSERNAME@hydra-login01.si.edu:/pool/genomics/YOURUSERNAME/dc_workshop/results/bam/SRR097977.aligned.sorted.bam ~/Desktop/files_for_igv
+$ scp YOURUSERNAME@hydra-login01.si.edu:/pool/genomics/YOURUSERNAME/dc_workshop/results/bam/SRR097977.aligned.sorted.bam.bai ~/Desktop/files_for_igv
+$ scp YOURUSERNAME@hydra-login01.si.edu:/pool/genomics/YOURUSERNAME/dc_workshop/data/ref_genome/ecoli_rel606.fasta ~/Desktop/files_for_igv
+$ scp YOURUSERNAME@hydra-login01.si.edu:/pool/genomics/YOURUSERNAME/dc_workshop/results/vcf/SRR097977_final_variants.vcf ~/Desktop/files_for_igv
 ~~~
 {: .bash}
 
-You will need to type the password for your AWS instance each time you call `scp`. 
+You will need to type your Hydra password each time you call `scp`. 
 
 Next we need to open the IGV software. If you haven't done so already, you can download IGV from the [Broad Institute's software page](https://www.broadinstitute.org/software/igv/download), double-click the `.zip` file
 to unzip it, and then drag the program into your Applications folder. 
