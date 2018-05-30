@@ -41,10 +41,10 @@ $ module load bioinformatics/trimmomatic
 
 On Hydra, we start trimmomatic with a shortcut that is available when
 you load the bioinformatics/trimmomatic module: `runtrimmomatic`.
-This shortcut has the `java -jar` and the full path to the jar file
-incorporated as well as some other java options that help 
-trimmomatic run well on Hydra. You can type `alias runtrimmomatic` to
-what the command expands to or you can type `module help bioinformatics/trimmomatic`.
+This shortcut (technically an [alias](https://en.wikipedia.org/wiki/Alias_(command))) has `java -jar` followed by 
+the full path to the jar file incorporated as well as some other java options that help 
+trimmomatic run well on Hydra. You can type `alias runtrimmomatic` to see
+what the alias does and you can type `module help bioinformatics/trimmomatic` for more details.
 
 
 ~~~
@@ -108,6 +108,9 @@ $ runtrimmomatic SE -threads <TBD> -phred64 SRR_1056.fastq SRR_1056_trimmed.fast
 ~~~
 {: .bash}
 
+*On Hydra it's essential to specify `-threads` or Trimmomatic will use more than threads
+on the compute node than you requested.*
+
 In this example, we've told Trimmomatic:
 
 | code   | meaning |
@@ -143,7 +146,7 @@ $ runtrimmomatic SE -threads <TBD> SRR098283.fastq SRR098283.fastq_trim.fastq SL
 
 ~~~
 TrimmomaticSE: Started with arguments: SRR098283.fastq SRR098283.fastq_trim.fastq SLIDINGWINDOW:4:20 MINLEN:20
-Automatically using 2 threads
+Automatically using <TBD> threads
 Quality encoding detected as phred33
 Input Reads: 21564058 Surviving: 17030985 (78.98%) Dropped: 4533073 (21.02%)
 TrimmomaticSE: Completed successfully
@@ -252,7 +255,7 @@ running Trimmomatic on our already trimmed file. `SRR098283.fastq_trim.fastq` an
 
 ~~~
 TrimmomaticSE: Started with arguments: SRR098283.fastq_trim.fastq SRR098283.fastq_trim.fastq_trim.fastq SLIDINGWINDOW:4:20 MINLEN:20
-Automatically using 2 threads
+Automatically using <TBD> threads
 Quality encoding detected as phred33
 Input Reads: 17030985 Surviving: 17030985 (100.00%) Dropped: 0 (0.00%)
 TrimmomaticSE: Completed successfully
