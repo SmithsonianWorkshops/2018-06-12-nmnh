@@ -47,6 +47,13 @@ is an option specifying that we're going to specify the location of
 the Java program we want to run. The Java program itself will have
 a `.jar` file extension.
 
+On Hydra, we start trimmomatic with a shortcut that is available when
+you load the bioinformatics/trimmomatic module: `runtrimmomatic`.
+This shortcut has the `java -jar` and the full path to the jar file
+incorporated as well as some other java options that help 
+trimmomatic run well on Hydra. You can type `alias runtrimmomatic` to
+what the command expands to or you can type `module help bioinformatics/trimmomatic`.
+
 That's just the basic command, however. Trimmomatic has a variety of
 options and parameters. We will need to specify what options we want
 to use for our analysis. Here are some of the options:
@@ -80,14 +87,14 @@ and options, see [the Trimmomatic manual](http://www.usadellab.org/cms/uploads/s
 We said above that a basic command for Trimmomatic looks like this:
 
 ~~~
-$ java -jar trimmomatic-0.32.jar SE
+$ runtrimmomatic SE
 ~~~
 {: .bash}
 
 However, a complete command for Trimmomatic will look something like this:
 
 ~~~
-$ java -jar trimmomatic-0.32.jar SE -threads 4 -phred64 SRR_1056.fastq SRR_1056_trimmed.fastq ILLUMINACLIP:SRR_adapters.fa SLIDINGWINDOW:4:20
+$ runtrimmomatic SE -threads 4 -phred64 SRR_1056.fastq SRR_1056_trimmed.fastq ILLUMINACLIP:SRR_adapters.fa SLIDINGWINDOW:4:20
 ~~~
 {: .bash}
 
@@ -108,7 +115,7 @@ In this example, we've told Trimmomatic:
 Now we will run Trimmomatic on our data. To begin, navigate to your `untrimmed_fastq` data directory:
 
 ~~~
-$ cd ~/dc_workshop/data/untrimmed_fastq
+$ cd /pool/genomics/USER/dc_workshop/data/untrimmed_fastq
 ~~~
 {: .bash}
 
@@ -119,12 +126,10 @@ discard any reads that do not have at least 20 bases remaining after
 this trimming step.
 
 ~~~
-$ java -jar ~/Trimmomatic-0.32/trimmomatic-0.32.jar SE SRR098283.fastq SRR098283.fastq_trim.fastq SLIDINGWINDOW:4:20 MINLEN:20
+$ runtrimmomatic SE -threads <TBD> SRR098283.fastq SRR098283.fastq_trim.fastq SLIDINGWINDOW:4:20 MINLEN:20
 ~~~
 {: .bash}
 
-Notice that we needed to give the absolute path to our copy of the
-Trimmomatic program.
 
 ~~~
 TrimmomaticSE: Started with arguments: SRR098283.fastq SRR098283.fastq_trim.fastq SLIDINGWINDOW:4:20 MINLEN:20
@@ -190,7 +195,7 @@ quickly!
 $ for infile in *.fastq
 > do
 > outfile="${infile}"_trim.fastq
-> java -jar ~/Trimmomatic-0.32/trimmomatic-0.32.jar SE "${infile}" "${outfile}" SLIDINGWINDOW:4:20 MINLEN:20
+> runtrimmomatic SE -threads <TBD> "${infile}" "${outfile}" SLIDINGWINDOW:4:20 MINLEN:20
 > done
 ~~~
 {: .bash}
@@ -338,7 +343,7 @@ SRR098027.fastq_trim.fastq  SRR098283.fastq_trim.fastq
 >>
 >> ~~~
 >> $ mkdir ~/Desktop/fastqc_html/trimmed
->> $ scp dcuser@ec2-34-203-203-131.compute-1.amazonaws.com:~/dc_workshop/data/trimmed_fastq/*.html ~/Desktop/fastqc_html/trimmed
+>> $ scp dcuser@hydra-login01:~/dc_workshop/data/trimmed_fastq/*.html ~/Desktop/fastqc_html/trimmed
 >> $ open ~/Desktop/fastqc_html/trimmed/*.html
 >> ~~~
 >> {: .bash}
