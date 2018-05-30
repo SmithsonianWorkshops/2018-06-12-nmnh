@@ -318,7 +318,7 @@ some additional information:
 ##INFO=<ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
 ##INFO=<ID=MQ,Number=1,Type=Integer,Description="Average mapping quality">
 ~~~
-{: .output}
+
 
 Followed by information on each of the variations observed: 
 
@@ -401,7 +401,9 @@ to learn more about VCF file format.
 >> .
 >> ~~~
 >>
+>>
 >> Position 911613 has a score of 3.88886.
+>>
 >></p></details>
 
 ## Assess the alignment (visualization) - optional step
