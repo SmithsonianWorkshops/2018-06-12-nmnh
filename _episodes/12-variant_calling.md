@@ -376,7 +376,8 @@ to learn more about VCF file format.
 > output file (without the header lines). What is the position of the first variant to be called with a `QUAL` 
 > value of less than 4?
 >
->> ## Solution
+>> ## Solution 
+>> <details><summary> </summary><p>
 >> 
 >> ~~~
 >> $ cut results/vcf/SRR097977_final_variants.vcf -f 6,2 | grep -v "##" | less
@@ -401,8 +402,7 @@ to learn more about VCF file format.
 >> ~~~
 >>
 >> Position 911613 has a score of 3.88886.
-> {: .solution}
-{: .challenge}
+>></p></details>
 
 ## Assess the alignment (visualization) - optional step
 
