@@ -30,21 +30,12 @@ sequences against a large reference genome. The alignment process consists of tw
 
 # Setting up
 
-First we will link in the reference genome data into our `data/` directory. `ln` stands for link. Hardlinks typically only work for files (not directories), and they basically act as another name for the same data that is stored on your harddrive. However here, we use the `-s` flag, which stands for a symbolic link (symlink). A symlink creates a file that stores the path of another file. This allows you to access the information in that file with a new path without moving the data on your hard drive.  
-
-Although copying our data would accomplish something similar, this way, the data only lives in one place on our hard drive, thereby taking up less space. This becomes important when your files become very large. Symbolic links allow you to have the data in one location on your hard drive, but call it from many. 
-
+First we will copy the reference genome data into our `data/` directory. We will also link in a set of trimmed FASTQ files to work with. These are small subsets of our real trimmed data, 
+and will enable us to run our variant calling workflow quite quickly. 
 ~~~
 $ cd /pool/genomics/YOURUSERNAME/dc_workshop
-$ ln -s /data/genomics/workshops/data_carpentry_genomics/dc_sampledata_lite/ref_genome/ data/
-~~~
-{: .bash}
-
-We will also link in a set of trimmed FASTQ files to work with. These are small subsets of our real trimmed data, 
-and will enable us to run our variant calling workflow quite quickly. 
-
-~~~
-$ ln -s /data/genomics/workshops/data_carpentry_genomics/dc_sampledata_lite/trimmed_fastq_small/ data/
+$ cp -r /data/genomics/workshops/data_carpentry_genomics/dc_sampledata_lite/ref_genome/ data/
+$ cp -r /data/genomics/workshops/data_carpentry_genomics/dc_sampledata_lite/trimmed_fastq_small/ data/
 ~~~
 {: .bash}
 
@@ -221,25 +212,16 @@ $ samtools view -S -b results/sam/SRR097977.aligned.sam > results/bam/SRR097977.
 ~~~
 {: .bash}
 
-~~~
-[samopen] SAM header is present: 1 sequences.
-~~~
-{: .output}
-
 
 ### Sort BAM file by coordinates
 
 Next we sort the BAM file using the `sort` command from `samtools`. Note that as second parameter, we give the filename of the desired output file *without* the `.bam` part:
 
 ~~~
-$ samtools sort results/bam/SRR097977.aligned.bam results/bam/SRR097977.aligned.sorted
+$ samtools sort results/bam/SRR097977.aligned.bam > results/bam/SRR097977.aligned.sorted.bam
 ~~~
 {: .bash}
 
-~~~
-[bam_sort_core] merging from 2 files...
-~~~
-{: .output}
 
 > ## More Than One Way to . . . sort a SAM/BAM File
 > SAM/BAM files can be sorted in multiple ways, e.g. by location of alignment on the chromosome, by read name, etc. It is important
@@ -271,6 +253,7 @@ $ samtools mpileup -g -f data/ref_genome/ecoli_rel606.fasta \
 ~~~
 [fai_load] build FASTA index.
 [mpileup] 1 samples in 1 input files
+<mpileup> Set max per-file depth to 8000
 ~~~
 {: .output}
 
@@ -282,23 +265,18 @@ Identify SNPs using bcftools:
 
 ~~~
 $ module load bioinformatics/bcftools
-$ bcftools view -bvcg results/bcf/SRR097977_raw.bcf > results/bcf/SRR097977_variants.bcf
+$ bcftools call -vm -O b results/bcf/SRR097977_raw.bcf > results/bcf/SRR097977_variants.bcf
 ~~~
 {: .bash}
 
-~~~
-[bcfview] 100000 sites processed.
-[afs] 0:99941.647 1:28.786 2:29.568
-[afs] 0:56680.981 1:14.316 2:18.702
-~~~
-{: .output}
 
 ### Step 3: Filter and report the SNP variants in variant calling format (VCF)
 
 Filter the SNPs for the final output in VCF format, using `vcfutils.pl`:
 
 ~~~
-$ bcftools view results/bcf/SRR097977_variants.bcf \ | /usr/share/samtools/vcfutils.pl varFilter - > results/vcf/SRR097977_final_variants.vcf
+$ bcftools view results/bcf/SRR097977_variants.bcf | \
+$ vcfutils.pl varFilter - > results/vcf/SRR097977_final_variants.vcf
 ~~~
 {: .bash}
 
@@ -317,27 +295,31 @@ created, the version of bcftools that was used, the command line parameters used
 some additional information:
 
 ~~~
-##fileformat=VCFv4.1
-##samtoolsVersion=0.1.19-96b5f2294a
+##fileformat=VCFv4.2
+##FILTER=<ID=PASS,Description="All filters passed">
+##samtoolsVersion=1.3.1+htslib-1.3.1
+##samtoolsCommand=samtools mpileup -g -f data/ref_genome/ecoli_rel606.fasta results/bam/SRR097977.aligned.sorted.bam
 ##reference=file://data/ref_genome/ecoli_rel606.fasta
 ##contig=<ID=NC_012967.1,length=4629812>
+##ALT=<ID=*,Description="Represents allele(s) other than observed.">
+##INFO=<ID=INDEL,Number=0,Type=Flag,Description="Indicates that the variant is an INDEL.">
+##INFO=<ID=IDV,Number=1,Type=Integer,Description="Maximum number of reads supporting an indel">
+##INFO=<ID=IMF,Number=1,Type=Float,Description="Maximum fraction of reads supporting an indel">
 ##INFO=<ID=DP,Number=1,Type=Integer,Description="Raw read depth">
-##INFO=<ID=DP4,Number=4,Type=Integer,Description="# high-quality ref-forward bases, ref-reverse, alt-forward and alt-reverse bases">
-##INFO=<ID=MQ,Number=1,Type=Integer,Description="Root-mean-square mapping quality of covering reads">
-##INFO=<ID=FQ,Number=1,Type=Float,Description="Phred probability of all samples being the same">
-##INFO=<ID=AF1,Number=1,Type=Float,Description="Max-likelihood estimate of the first ALT allele frequency (assuming HWE)">
-##INFO=<ID=AC1,Number=1,Type=Float,Description="Max-likelihood estimate of the first ALT allele count (no HWE assumption)">
+##INFO=<ID=VDB,Number=1,Type=Float,Description="Variant Distance Bias for filtering splice-site artefacts in RNA-seq data (bigger is better)",Version="3">
+##INFO=<ID=RPB,Number=1,Type=Float,Description="Mann-Whitney U test of Read Position Bias (bigger is better)">
 .
 .
 .
 .
-##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
-##FORMAT=<ID=GQ,Number=1,Type=Integer,Description="Genotype Quality">
-##FORMAT=<ID=GL,Number=3,Type=Float,Description="Likelihoods for RR,RA,AA genotypes (R=ref,A=alt)">
-##FORMAT=<ID=DP,Number=1,Type=Integer,Description="# high-quality bases">
-##FORMAT=<ID=DV,Number=1,Type=Integer,Description="# high-quality non-reference bases">
-##FORMAT=<ID=SP,Number=1,Type=Integer,Description="Phred-scaled strand bias P-value">
 ##FORMAT=<ID=PL,Number=G,Type=Integer,Description="List of Phred-scaled genotype likelihoods">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##INFO=<ID=ICB,Number=1,Type=Float,Description="Inbreeding Coefficient Binomial test (bigger is better)">
+##INFO=<ID=HOB,Number=1,Type=Float,Description="Bias in the number of HOMs number (smaller is better)">
+##INFO=<ID=AC,Number=A,Type=Integer,Description="Allele count in genotypes for each ALT allele, in the same order as listed">
+##INFO=<ID=AN,Number=1,Type=Integer,Description="Total number of alleles in called genotypes">
+##INFO=<ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+##INFO=<ID=MQ,Number=1,Type=Integer,Description="Average mapping quality">
 ~~~
 {: .output}
 
@@ -345,14 +327,13 @@ Followed by information on each of the variations observed:
 
 ~~~
 #CHROM  POS     ID      REF     ALT     QUAL    FILTER  INFO    FORMAT  results/bam/SRR097977.aligned.sorted.bam
-NC_012967.1     9972    .       T       G       222     .       DP=28;VDB=8.911920e-02;AF1=1;AC1=2;DP4=0,0,19,7;MQ=36;FQ=-105   GT:
-PL:GQ        1/1:255,78,0:99
-NC_012967.1     10563   .       G       A       222     .       DP=27;VDB=6.399241e-02;AF1=1;AC1=2;DP4=0,0,8,18;MQ=36;FQ=-105   GT:PL:GQ        1/1:255,78,0:99
-NC_012967.1     81158   .       A       C       222     .       DP=37;VDB=2.579489e-02;AF1=1;AC1=2;DP4=0,0,15,21;MQ=37;FQ=-135  GT:PL:GQ        1/1:255,108,0:99
-NC_012967.1     216480  .       C       T       222     .       DP=39;VDB=2.356774e-01;AF1=1;AC1=2;DP4=0,0,19,17;MQ=36;FQ=-135  GT:PL:GQ        1/1:255,108,0:99
-NC_012967.1     247796  .       T       C       221     .       DP=18;VDB=1.887634e-01;AF1=1;AC1=2;DP4=0,0,7,11;MQ=35;FQ=-81    GT:PL:GQ        1/1:254,54,0:99
-NC_012967.1     281923  .       G       T       222     .       DP=27;VDB=9.694360e-02;AF1=1;AC1=2;DP4=0,0,8,18;MQ=37;FQ=-105   GT:PL:GQ        1/1:255,78,0:99
-NC_012967.1     295604  .       T       G       4.77    .       DP=15;VDB=5.094834e-02;RPB=1.240303e+00;AF1=0.4999;AC1=1;DP4=2,9,4,0;MQ=36;FQ=6.99;PV4=0.011,0.084,0.0043,0.14  GT:PL:GQ        0/1:33,0,171:33
+NC_012967.1     9972    .       T       G       66      .       DP=3;VDB=0.220755;SGB=-0.511536;MQSB=1;MQ0F=0;AC=2;AN=2;DP4=0,0,1,2;MQ=37       GT:PL   1/1:96,9,0
+NC_012967.1     10563   .       G       A       24.4299 .       DP=2;VDB=0.36;SGB=-0.453602;MQ0F=0;AC=2;AN=2;DP4=0,0,0,2;MQ=37  GT:PL   1/1:54,6,0
+NC_012967.1     81158   .       A       C       148     .       DP=8;VDB=0.250641;SGB=-0.636426;MQSB=1.01283;MQ0F=0;AC=2;AN=2;DP4=0,0,4,3;MQ=37 GT:PL   1/1:178,21,0
+NC_012967.1     139812  .       G       T       8.07754 .       DP=4;VDB=0.56;SGB=-0.453602;RPB=1;MQB=1;MQSB=1;BQB=0.25;MQ0F=0;ICB=1;HOB=0.5;AC=1;AN=2;DP4=0,2,1,1;MQ=37        GT:PL   0/1:40,0,49
+NC_012967.1     216480  .       C       T       62      .       DP=4;VDB=0.235765;SGB=-0.511536;MQSB=1;MQ0F=0;AC=2;AN=2;DP4=0,0,1,2;MQ=37       GT:PL   1/1:92,9,0
+NC_012967.1     247796  .       T       C       58      .       DP=3;VDB=0.102722;SGB=-0.511536;MQSB=1;MQ0F=0;AC=2;AN=2;DP4=0,0,1,2;MQ=33       GT:PL   1/1:88,9,0
+NC_012967.1     281923  .       G       T       38.415  .       DP=2;VDB=0.06;SGB=-0.453602;MQSB=1;MQ0F=0;AC=2;AN=2;DP4=0,0,1,1;MQ=37   GT:PL   1/1:68,6,0
 ~~~
 {: .output}
 
@@ -380,7 +361,7 @@ The last two columns contain the genotypes and can be tricky to decode.
 | FORMAT | lists in order the metrics presented in the final column | 
 | results | lists the values associated with those metrics in order | 
 
-For our file, the metrics presented are GT:PL:GQ. 
+For our file, the metrics presented are DP:VDB:SGB:MQSB:MQOF:AC:AN:DP4:MQ:GT:PL. 
 
 | metric | definition | 
 | ------- | ---------- |
@@ -389,7 +370,7 @@ For our file, the metrics presented are GT:PL:GQ.
 | GQ | the Phred-scaled confidence for the genotype | 
 | AD, DP | the depth per allele by sample and coverage |
 
-The Broad Institute's [VCF guide](https://www.broadinstitute.org/gatk/guide/article?id=1268) is an excellent place
+The Broad Institute's [VCF guide](https://software.broadinstitute.org/gatk/documentation/article?id=11005) is an excellent place
 to learn more about VCF file format.
 
 > ## Exercise
@@ -407,21 +388,24 @@ to learn more about VCF file format.
 >> 
 >> ~~~ 
 >> POS     QUAL
->> 9972    222
->> 10563   222
->> 81158   222
->> 216480  222
->> 247796  221
->> 281923  222
+>> 9972    66
+>> 10563   24.429
+>> 81158   148
+>> 139812  8.07754
+>> 216480  62
+>> 247796  58
+>> 281923  38.415
 >> .
 >> .
 >> .
->> 1004106 7.8
->> 1019082 3.01
+>> 788403  4.97012
+>> 911613  3.88886
+>> .
+>> .
 >> ~~~
 >> {: .output}
 >>
->> Position 1019082 has a score of 3.01.
+>> Position 911613 has a score of 3.88886.
 > {: .solution}
 {: .challenge}
 
@@ -520,6 +504,18 @@ $ scp YOURUSERNAME@hydra-login01.si.edu:/pool/genomics/YOURUSERNAME/dc_workshop/
 {: .bash}
 
 You will need to type your Hydra password each time you call `scp`. 
+
+Alternatively, you can copy everything using one command, and add the password only once. Each path/file is separated by a space and all files to be copied are delimited by a a single quote ('): 
+
+~~~
+$ scp YOURUSERNAME@hydra-login01.si.edu:'/scratch/genomics/YOURUSERNAME/dc_workshop/results/bam/SRR097977.aligned.sorted.bam \
+/scratch/genomics/YOURUSERNAME/dc_workshop/results/bam/SRR097977.aligned.sorted.bam.bai \
+/scratch/genomics/YOURUSERNAME/dc_workshop/data/ref_genome/ecoli_rel606.fasta \ /scratch/genomics/YOURUSERNAME/dc_workshop/results/vcf/SRR097977_final_variants.vcf' \
+~/Desktop/files_for_igv/
+
+~~~
+{: .bash}
+
 
 Next we need to open the IGV software. If you haven't done so already, you can download IGV from the [Broad Institute's software page](https://www.broadinstitute.org/software/igv/download), double-click the `.zip` file
 to unzip it, and then drag the program into your Applications folder. 
