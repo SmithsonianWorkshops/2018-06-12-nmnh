@@ -399,13 +399,7 @@ we're transferring. Let's put it on our desktop for now.
 
 Now we can transfer our HTML files to our local computer using `scp`.
 
-~~~
-$ scp useranme@hydra-login01.si.edu:/pool/genomics/username/dc_workshop/results/fastqc_untrimmed_reads/*.html ~/Desktop/fastqc_html
-~~~
-{: .bash}
-
-
-On Macs or Linux laptops:
+### On Macs or Linux:
 Open a new tab in your terminal program (you can use the pull down menu at the
 top of your screen or the Cmd+t keyboard shortcut) and type:
 
@@ -414,7 +408,12 @@ $ mkdir ~/Desktop/fastqc_html
 ~~~
 {: .bash}
 
-On Windows:
+~~~
+$ scp useranme@hydra-login01.si.edu:/pool/genomics/username/dc_workshop/results/fastqc_untrimmed_reads/*.html ~/Desktop/fastqc_html
+~~~
+{: .bash}
+
+### On Windows:
 Open a Windows command prompt window by typing Windows+R (the Windows key and the 'r' key at the same time). You should see a "Run" window open.
 In the box enter: `cmd`, a new cmd.exe window should open.
 
@@ -425,7 +424,7 @@ $ mkdir %HOMEPATH%\Desktop\fastqc_html
 ~~~
 {: .bash}
 
-(`%HOMEPATH%` is the same as `~` in Unix based systems )
+(`%HOMEPATH%` is roughly the same as `~` in Unix based systems )
 
 Now we can transfer our HTML files to our local computer using `pscp`.
 
@@ -434,8 +433,7 @@ Now we can transfer our HTML files to our local computer using `pscp`.
 ~~~
 {: .bash}
 
-
-
+### Back to everyone
 This looks really complicated, so let's break it down. The first part
 of the command `useranme@hydra-login01.si.edu` is
 the address for your remote computer. Make sure you replace `useranme`
