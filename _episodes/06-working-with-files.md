@@ -448,7 +448,7 @@ $ ls -l
 {: .bash}
 
 ~~~
--r--r--r-- 1 dcuser dcuser 43332 Nov 15 23:02 SRR098026-backup.fastq
+-r--r--r-- 1 username username 43332 Nov 15 23:02 SRR098026-backup.fastq
 ~~~
 {: .output}
 
