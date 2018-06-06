@@ -259,7 +259,7 @@ WG 33
   We will use this <a href="{{page.collaborative_notes}}">collaborative document</a> for chatting, taking notes, and sharing URLs and bits of code.
 </p>
 {% endif %}
-Workshop Lessons: <a href="https://smithsonianworkshops.github.io/2018-06-12-nmnh/lessons_index.html"></a>
+Workshop Lessons: <a href="https://smithsonianworkshops.github.io/2018-06-12-nmnh/lessons_index.html">https://smithsonianworkshops.github.io/2018-06-12-nmnh/lessons_index.html</a>
 
 <hr/>
 
