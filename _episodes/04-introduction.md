@@ -335,7 +335,7 @@ If we navigate back to our `untrimmed_fastq` directory and try to access one
 of our sample files:
 
 ~~~
-$ cd /poo/genomics/username
+$ cd /pool/genomics/username
 $ cd dc_sample_data
 $ cd untrimmed_fastq
 $ ls SR<tab>
