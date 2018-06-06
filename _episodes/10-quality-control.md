@@ -259,12 +259,12 @@ $ cd /pool/genomics/username/dc_workshop/data/untrimmed_fastq/
 >> {: .bash}
 >>
 >> ~~~
->> -rw-r--r-- 1 dcuser dcuser 840M Jul 30  2015 SRR097977.fastq
->> -rw-r--r-- 1 dcuser dcuser 3.4G Jul 30  2015 SRR098026.fastq
->> -rw-r--r-- 1 dcuser dcuser 875M Jul 30  2015 SRR098027.fastq
->> -rw-r--r-- 1 dcuser dcuser 3.4G Jul 30  2015 SRR098028.fastq
->> -rw-r--r-- 1 dcuser dcuser 4.0G Jul 30  2015 SRR098281.fastq
->> -rw-r--r-- 1 dcuser dcuser 3.9G Jul 30  2015 SRR098283.fastq
+>> -rw-r--r-- 1 username username 840M Jul 30  2015 SRR097977.fastq
+>> -rw-r--r-- 1 username username 3.4G Jul 30  2015 SRR098026.fastq
+>> -rw-r--r-- 1 username username 875M Jul 30  2015 SRR098027.fastq
+>> -rw-r--r-- 1 username username 3.4G Jul 30  2015 SRR098028.fastq
+>> -rw-r--r-- 1 username username 4.0G Jul 30  2015 SRR098281.fastq
+>> -rw-r--r-- 1 username username 3.9G Jul 30  2015 SRR098283.fastq
 >> ~~~
 >> {: .output}
 >>
@@ -409,7 +409,7 @@ $ mkdir ~/Desktop/fastqc_html
 {: .bash}
 
 ~~~
-$ scp useranme@hydra-login01.si.edu:/pool/genomics/username/dc_workshop/results/fastqc_untrimmed_reads/*.html ~/Desktop/fastqc_html
+$ scp username@hydra-login01.si.edu:/pool/genomics/username/dc_workshop/results/fastqc_untrimmed_reads/*.html ~/Desktop/fastqc_html
 ~~~
 {: .bash}
 
@@ -429,14 +429,14 @@ $ mkdir %HOMEPATH%\Desktop\fastqc_html
 Now we can transfer our HTML files to our local computer using `pscp`.
 
 ~~~
-> pscp useranme@hydra-login01.si.edu:/pool/genomics/username/dc_workshop/results/fastqc_untrimmed_reads/*.html %HOMEPATH%\Desktop\fastqc_html
+> pscp username@hydra-login01.si.edu:/pool/genomics/username/dc_workshop/results/fastqc_untrimmed_reads/*.html %HOMEPATH%\Desktop\fastqc_html
 ~~~
 {: .bash}
 
 ### Back to everyone
 This looks really complicated, so let's break it down. The first part
-of the command `useranme@hydra-login01.si.edu` is
-the address for your remote computer. Make sure you replace `useranme`
+of the command `username@hydra-login01.si.edu` is
+the address for your remote computer. Make sure you replace `username`
 with your actual username.
 
 The second part starts with a `:` and then gives the absolute path
