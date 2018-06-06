@@ -152,7 +152,7 @@ By default, the `ls` commands lists the contents of the working
 directory (i.e. the directory you are in). You can always find the
 directory you are in using the `pwd` command. However, you can also
 give `ls` the names of other directories to view. Navigate to your
-home directory if you are not already there.
+`/pool/genomics` directory if you are not already there.
 
 ~~~
 $ cd /pool/genomics/username
@@ -189,7 +189,7 @@ the intermediate directory.
 
 > ## Navigating practice
 >
-> Navigate to your home directory. From there, list the contents of the `untrimmed_fastq`
+> Navigate to your `/pool/genomics` directory. From there, list the contents of the `untrimmed_fastq`
 > directory.
 >
 > > ## Solution
@@ -226,15 +226,15 @@ $ pwd
 You will see:
 
 ~~~
-/home/dcuser
+/home/username
 ~~~
 {: .output}
 
 This is the full name of your home directory. This tells you that you
-are in a directory called `dcuser`, which sits inside a directory called
+are in a directory called `username`, which sits inside a directory called
 `home` which sits inside the very top directory in the hierarchy. The
 very top of the hierarchy is a directory called `/` which is usually
-referred to as the *root directory*. So, to summarize: `dcuser` is a
+referred to as the *root directory*. So, to summarize: `username` is a
 directory in `home` which is a directory in `/`.
 
 Now enter the following command:
@@ -245,7 +245,7 @@ $ cd /pool/genomics/username/dc_sample_data/.hidden
 {: .bash}
 
 This jumps forward multiple levels to the `.hidden` directory.
-Now go back to the home directory.
+Now go back to the `/pool/genomics` directory.
 
 ~~~
 $ cd /pool/genomics
