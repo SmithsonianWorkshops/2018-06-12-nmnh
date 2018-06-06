@@ -171,7 +171,7 @@ $ pwd
 {: .bash}
 
 ~~~
-/home/USER
+/home/username
 ~~~
 {: .output}
 
@@ -261,8 +261,8 @@ to quit.
 > > {: .bash}
 > >
 > > ~~~
-> > drwxr-x--- 2 dcuser dcuser 4096 Jul 30  2015 sra_metadata
-> > drwxr-xr-x 2 dcuser dcuser 4096 Jul 30  2015 untrimmed_fastq
+> > drwxr-x--- 2 username username 4096 Jul 30  2015 sra_metadata
+> > drwxr-xr-x 2 username username 4096 Jul 30  2015 untrimmed_fastq
 > > ~~~
 > > {: .output}
 > >
