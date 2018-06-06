@@ -367,8 +367,7 @@ For our file, the metrics presented are DP:VDB:SGB:MQSB:MQOF:AC:AN:DP4:MQ:GT:PL.
 | GQ | the Phred-scaled confidence for the genotype | 
 | AD, DP | the depth per allele by sample and coverage |
 
-The Broad Institute's [VCF guide](https://software.broadinstitute.org/gatk/documentation/article?id=11005) is an excellent place
-to learn more about VCF file format.
+The Broad Institute's [VCF guide](https://software.broadinstitute.org/gatk/documentation/article?id=11005) is an excellent place to learn more about VCF file format.
 
 > ## Exercise
 > 
@@ -397,8 +396,6 @@ to learn more about VCF file format.
 >> .
 >> 788403  4.97012
 >> 911613  3.88886
->> .
->> .
 >> ~~~
 >> {: .output}
 >>
