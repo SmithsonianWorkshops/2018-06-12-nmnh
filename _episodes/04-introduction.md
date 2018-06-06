@@ -29,7 +29,7 @@ with a keyboard instead of controlling graphical user interfaces
 
 There are many reasons to learn about the shell.
 
-* Many bioinformatics tools can only be used through a command line interface, or 
+* Many bioinformatics tools can only be used through a command line interface, or
 have extra capabilities in the command line version that are not available in the GUI.
 This is true, for example, of BLAST, which offers many advanced functions only accessible
 to users who know how to use a shell.  
@@ -39,9 +39,9 @@ automate those repetitive tasks and leave you free to do more exciting things.
 * The shell makes your work less error-prone. When humans do the same thing a hundred different times
 (or even ten times), they're likely to make a mistake. Your computer can do the same thing a thousand times
 with no mistakes.  
-* The shell makes your work more reproducible. When you carry out your work in the command-line 
-(rather than a GUI), your computer keeps a record of every step that you've carried out, which you can use 
-to re-do your work when you need to. It also gives you a way to communicate unambiguously what you've done, 
+* The shell makes your work more reproducible. When you carry out your work in the command-line
+(rather than a GUI), your computer keeps a record of every step that you've carried out, which you can use
+to re-do your work when you need to. It also gives you a way to communicate unambiguously what you've done,
 so that others can check your work or apply your process to new data.  
 * Many bioinformatic tasks require large amounts of computing power and can't realistically be run on your
 own machine. These tasks are best performed using remote computers or cloud computing, which can only be accessed
@@ -49,7 +49,7 @@ through a shell.
 
 ![Automation](../img/gvng.jpg)
 
-In this lesson you will learn how to use the command line interface to move around in your file system. 
+In this lesson you will learn how to use the command line interface to move around in your file system.
 
 ## How to access the shell
 
@@ -59,17 +59,16 @@ on your computer. If you're using Windows, you'll need to download a separate pr
 We will spend most of our time learning about the basics of the shell
 by manipulating some experimental data. Some of the data we're going to be working with is quite large, and
 we're also going to be using several bioinformatics packages in later
-lessons to work with this data. To avoid having to spend time 
+lessons to work with this data. To avoid having to spend time
 downloading the data and downloading and installing all of the software,
-we're going to be working with data on Hydra. 
+we're going to be working with data on Hydra.
 
-You can log-in to Hydra using the instructions 
+You can log-in to Hydra using the instructions
 [here](https://confluence.si.edu/display/HPC/Logging+into+Hydra).  
 
-After loging on, you will see a screen showing something like this: 
+After loging on, you will see a screen showing something like this:
 
 ~~~
-Last login: Wed May 30 09:27:19 2018 from nmnh-l31266.us.sinet.si.edu
 ---------------------------------------------------------------------------
  Welcome to the SI/HPC cluster Hydra-4 (Rocks 6.2/SideWinder, CentOS 6.9)
 ---------------------------------------------------------------------------
@@ -85,7 +84,7 @@ This is one of the two login nodes.
 
 ---------------------------------------------------------------------------
 
-  May 16 2018 
+  May 16 2018
 
   We are very pleased to announce that the systems administrator duties for
   Hydra are being transferred to Dr. Jamal Uddin, who just joined the Research
@@ -98,7 +97,7 @@ This is one of the two login nodes.
   SI-HPC@si.edu, SAO users who need help for their applications should contact
   Sylvain at hpc@cfa.harvard.edu.
 
-Reminders: 
+Reminders:
   + An interactive queue has been added to Hydra, interactive use of the
     login nodes is being monitored.
   + All public disks (/pool and /scratch only) are scrubbed. Reasonable
@@ -113,14 +112,14 @@ Reminders:
 {: .output}
 
 This provides a lot of information about the remote server that you're logging in to. We're not going to use most of this information for
-our workshop, so you can clear your screen using the `clear` command. 
+our workshop, so you can clear your screen using the `clear` command.
 
 ~~~
 $ clear
 ~~~
 {: .bash}
 
-This will scroll your screen down to give you a fresh screen and will make it easier to read. 
+This will scroll your screen down to give you a fresh screen and will make it easier to read.
 You haven't lost any of the information on your screen. If you scroll up, you can see everything that has been output to your screen
 up until this point.
 
@@ -178,7 +177,7 @@ $ pwd
 
 Let's look at how our file system is organized.  
 
-On Hydra, we ask that users run jobs from their `/pool`, `/scratch`, or `/data` directories (e.g. `/pool/genomics/USER`). 
+On Hydra, we ask that users run jobs from their `/pool`, `/scratch`, or `/data` directories (e.g. `/pool/genomics/USER`).
 
 We will be using files located in `/data/genomics/workshops/data_carpentry_genomics`
 
@@ -190,6 +189,7 @@ directory name to change our working directory.
 and then using `cp -r`, which stands for copy recursively (i.e. the whole directory).
 
 ~~~
+cd /pool/genomics/username
 cp -r /data/genomics/workshops/data_carpentry_genomics/dc_sample_data .
 
 ~~~
@@ -250,7 +250,7 @@ and the <kbd>b</kbd> key to go backwards one page. When you are done reading, hi
 to quit.
 
 > ## Challenge
-> Use the `-l` option for the `ls` command to display more information for each item 
+> Use the `-l` option for the `ls` command to display more information for each item
 > in the directory. What is one piece of additional information this long format
 > gives you that you don't see with the bare `ls` command?
 >
@@ -259,17 +259,17 @@ to quit.
 > > $ ls -l
 > > ~~~
 > > {: .bash}
-> > 
+> >
 > > ~~~
 > > drwxr-x--- 2 dcuser dcuser 4096 Jul 30  2015 sra_metadata
 > > drwxr-xr-x 2 dcuser dcuser 4096 Jul 30  2015 untrimmed_fastq
 > > ~~~
 > > {: .output}
-> > 
+> >
 > > The additional information given includes the name of the owner of the file,
 > > when the file was last modified, and whether the current user has permission
 > > to read and write to the file.
-> > 
+> >
 > {: .solution}
 {: .challenge}
 
@@ -297,7 +297,7 @@ We will be learning more about FASTQ files in a later lesson.
 ### Shortcut: Tab Completion
 
 Typing out file or directory names can waste a
-lot of time and it's easy to make typing mistakes. Instead we can use tab complete 
+lot of time and it's easy to make typing mistakes. Instead we can use tab complete
 as a shortcut. When you start typing out the name of a directory or file, then
 hit the <kbd>Tab</kbd> key, the shell will try to fill in the rest of the
 directory or file name.
@@ -305,7 +305,7 @@ directory or file name.
 Return to your home directory:
 
 ~~~
-cd
+cd /pool/genomics/username
 ~~~
 
 then enter:
@@ -313,7 +313,7 @@ then enter:
 ~~~
 $ cd dc_sam<tab>
 ~~~
-  
+
 {: .bash}
 
 The shell will fill in the rest of the directory name for
@@ -335,14 +335,14 @@ If we navigate back to our `untrimmed_fastq` directory and try to access one
 of our sample files:
 
 ~~~
-$ cd
+$ cd /poo/genomics/username
 $ cd dc_sample_data
 $ cd untrimmed_fastq
 $ ls SR<tab>
 ~~~
 {: .bash}
 
-The shell auto-completes your command to `SRR09`, because all file names in 
+The shell auto-completes your command to `SRR09`, because all file names in
 the directory begin with this prefix. When you hit
 <kbd>Tab</kbd> again, the shell will list the possible choices.
 
@@ -357,7 +357,7 @@ SRR097977.fastq  SRR098026.fastq
 {: .output}
 
 Tab completion can also fill in the names of programs, which can be useful if you
-remember the begining of a program name. 
+remember the begining of a program name.
 
 ~~~
 $ pw<tab><tab>
@@ -369,15 +369,15 @@ pwd         pwd_mkdb    pwhich      pwhich5.16  pwhich5.18  pwpolicy
 ~~~
 {: .output}
 
-Displays the name of every program that starts with `pw`. 
+Displays the name of every program that starts with `pw`.
 
 ## Summary
 
 We now know how to move around our file system using the command line.
 This gives us an advantage over interacting with the file system through
-a GUI as it allows us to work on a remote server, carry out the same set of operations 
-on a large number of files quickly, and opens up many opportunities for using 
-bioinformatics software that is only available in command line versions. 
+a GUI as it allows us to work on a remote server, carry out the same set of operations
+on a large number of files quickly, and opens up many opportunities for using
+bioinformatics software that is only available in command line versions.
 
-In the next few episodes, we'll be expanding on these skills and seeing how 
+In the next few episodes, we'll be expanding on these skills and seeing how
 using the command line shell enables us to make our workflow more efficient and reproducible.
