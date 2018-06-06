@@ -388,7 +388,7 @@ WG 33
         The installer for PuTTY can be found on the
         <a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html">Putty download page</a>.
         For most Windows systems (64-bit) you'll want "putty-64bit-0.XX-installer.msi".
-        If yo don't have admin privileges to your Windows system, you can download "putty.exe"
+        If you don't have admin privileges to your Windows system, you can download "putty.exe"
         which can be run directly without admin rights.
       </p>
     </div>
@@ -428,6 +428,7 @@ WG 33
       <li>For most Windows systems (64-bit), choose the download "FileZilla_3.XX.0_win64-setup.exe" (XX will be the value of the current release).</li>
       <li>Run the installer which will require you having administrative access to your computer.</li>
       <li>If you don't have an admin account on your computer: download and unzip the files "FileZilla_3.XX.0_win64.zip". The .exe files in this can be run without running an installer first.</li>
+      <li>Please also install pscp, part of the <a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html">PuTTY package</a>. If you instlaled the full PuTTY installer (.msi file), pscp will be installed too. If you weren't able to run the full PuTTY installer because you don't have admin rights, make sure to also download pscp.exe. 
       </ol>
       </p>
     </div>
