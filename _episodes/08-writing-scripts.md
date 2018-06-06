@@ -25,12 +25,12 @@ Let's change our working directory to `~/dc_sample_data/untrimmed_fastq` using `
 then run `nano` to create a file called `README.txt`:
 
 ~~~
-$ cd ~/dc_sample_data/untrimmed_fastq
+$ cd /pool/genomics/username/dc_sample_data/untrimmed_fastq
 $ nano README.txt
 ~~~
 {: .bash}
 
-You should see something like this: 
+You should see something like this:
 
 ![nano201711.png](../img/nano201711.png)
 
@@ -40,12 +40,12 @@ The text at the bottom of the screen shows the keyboard shortcuts for performing
 >
 > When we say, "`nano` is a text editor," we really do mean "text": it can
 > only work with plain character data, not tables, images, or any other
-> human-friendly media. We use it in examples because it is one of the 
-> least complex text editors. However, because of this trait, it may 
+> human-friendly media. We use it in examples because it is one of the
+> least complex text editors. However, because of this trait, it may
 > not be powerful enough or flexible enough for the work you need to do
 > after this workshop. On Unix systems (such as Linux and Mac OS X),
 > many programmers use [Emacs](http://www.gnu.org/software/emacs/) or
-> [Vim](http://www.vim.org/) (both of which require more time to learn), 
+> [Vim](http://www.vim.org/) (both of which require more time to learn),
 > or a graphical editor such as
 > [Gedit](http://projects.gnome.org/gedit/). On Windows, you may wish to
 > use [Notepad++](http://notepad-plus-plus.org/).  Windows also has a built-in
@@ -93,10 +93,10 @@ Now you've written a file. You can take a look at it with `less` or `cat`, or op
 
 > ## Exercise
 >
-> Open `README.txt` and add the date to the top of the file and save the file. 
+> Open `README.txt` and add the date to the top of the file and save the file.
 >
 > > ## Solution
-> > 
+> >
 > > Use `nano README.txt` to open the file.  
 > > Add today's date and then use `Ctrl-X` to exit and `y` to save.
 > >
@@ -138,38 +138,38 @@ $ bash bad-reads-script.sh
 It will look like nothing happened, but now if you look at `scripted_bad_reads.txt`, you can see that there are now reads in the file.
 
 > ## Exercise
-> 
-> How many bad reads are there in the two FASTQ files combined? 
-> 
+>
+> How many bad reads are there in the two FASTQ files combined?
+>
 > Bonus: How many bad reads are in each of the two FASTQ files? (Hint: You will need to use the
 > `cut` command with the `-d` flag.)
-> 
+>
 > > ## Solution
-> > 
+> >
 > > ~~~
 > > $ wc -l scripted_bad_reads.txt
 > > ~~~
 > > {: .bash}
-> > 
+> >
 > > ~~~
 > > 537 scripted_bad_reads.txt
 > > ~~~
 > > {: .output}
-> > 
-> > There are 537 / 4 bad reads in the two files combined. If you look closely, you will see that there is a `--` delimiter inserted between the non-consecutive matches to grep. This accounts for the extra line. So there are 536 / 4 = 134 total bad reads. 
-> > 
+> >
+> > There are 537 / 4 bad reads in the two files combined. If you look closely, you will see that there is a `--` delimiter inserted between the non-consecutive matches to grep. This accounts for the extra line. So there are 536 / 4 = 134 total bad reads.
+> >
 > > ~~~
 > > $ cut -d . -f1 scripted_bad_reads.txt | sort | uniq -c
 > > ~~~
 > > {: .bash}
-> > 
+> >
 > > ~~~
 > > 1 --
 > > 536 SRR098026
 > > ~~~
 > > {: .output}
-> > 
-> > 
+> >
+> >
 > > There are 536 / 4 bad reads for the `SRR098026.fastq` file and none for the other file.
 > {: .solution}
 {: .challenge}
@@ -227,4 +227,4 @@ $ ./bad-reads-script.sh
 
 The script should run the same way as before, but now we've created our very own computer program!
 
-You will learn more about writing scripts in [a later lesson](http://www.datacarpentry.org/wrangling-genomics/02-automating_a_workflow/). 
+You will learn more about writing scripts in [a later lesson](http://www.datacarpentry.org/wrangling-genomics/02-automating_a_workflow/).
