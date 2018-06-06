@@ -128,7 +128,7 @@ In this example, we've told Trimmomatic:
 Now we will run Trimmomatic on our data. To begin, navigate to your `untrimmed_fastq` data directory:
 
 ~~~
-$ cd /pool/genomics/USER/dc_workshop/data/untrimmed_fastq
+$ cd /pool/genomics/username/dc_workshop/data/untrimmed_fastq
 ~~~
 {: .bash}
 
@@ -145,8 +145,7 @@ $ runtrimmomatic SE -threads <TBD> SRR098283.fastq SRR098283.fastq_trim.fastq SL
 
 
 ~~~
-TrimmomaticSE: Started with arguments: SRR098283.fastq SRR098283.fastq_trim.fastq SLIDINGWINDOW:4:20 MINLEN:20
-Automatically using <TBD> threads
+TrimmomaticSE: Started with arguments: -threads 1 SRR098283.fastq SRR098283.fastq_trim.fastq SLIDINGWINDOW:4:20 MINLEN:20
 Quality encoding detected as phred33
 Input Reads: 21564058 Surviving: 17030985 (78.98%) Dropped: 4533073 (21.02%)
 TrimmomaticSE: Completed successfully
@@ -192,8 +191,8 @@ $ ls SRR098283* -l -h
 {: .bash}
 
 ~~~
--rw-r--r-- 1 dcuser dcuser 3.9G Jul 30  2015 SRR098283.fastq
--rw-rw-r-- 1 dcuser dcuser 3.0G Nov  7 23:10 SRR098283.fastq_trim.fastq
+-rw-r--r-- 1 username username 3.9G Jul 30  2015 SRR098283.fastq
+-rw-rw-r-- 1 username username 3.0G Nov  7 23:10 SRR098283.fastq_trim.fastq
 ~~~
 {: .output}
 
@@ -208,7 +207,7 @@ quickly!
 $ for infile in *.fastq
 > do
 > outfile="${infile}"_trim.fastq
-> runtrimmomatic SE -threads <TBD> "${infile}" "${outfile}" SLIDINGWINDOW:4:20 MINLEN:20
+> runtrimmomatic SE -threads 1 "${infile}" "${outfile}" SLIDINGWINDOW:4:20 MINLEN:20
 > done
 ~~~
 {: .bash}
@@ -254,8 +253,7 @@ created a new output file named `SRR098283.fastq_trim.fastq_trim.fastq`, which i
 running Trimmomatic on our already trimmed file. `SRR098283.fastq_trim.fastq` and `SRR098283.fastq_trim.fastq_trim.fastq` should be identical. If you look at your Trimmomatic output in the terminal window, you will see:
 
 ~~~
-TrimmomaticSE: Started with arguments: SRR098283.fastq_trim.fastq SRR098283.fastq_trim.fastq_trim.fastq SLIDINGWINDOW:4:20 MINLEN:20
-Automatically using <TBD> threads
+TrimmomaticSE: Started with arguments: -threads 1 SRR098283.fastq_trim.fastq SRR098283.fastq_trim.fastq_trim.fastq SLIDINGWINDOW:4:20 MINLEN:20
 Quality encoding detected as phred33
 Input Reads: 17030985 Surviving: 17030985 (100.00%) Dropped: 0 (0.00%)
 TrimmomaticSE: Completed successfully
@@ -319,7 +317,7 @@ to a new subdirectory within our `data/` directory. We can also remove
 our extra, double-trimmed file for the `SRR098283` sample.
 
 ~~~
-$ cd /pool/genoimcs/USER/dc_workshop/data/untrimmed_fastq
+$ cd /pool/genoimcs/username/dc_workshop/data/untrimmed_fastq
 $ mkdir ../trimmed_fastq
 $ rm SRR098283.fastq_trim.fastq_trim.fastq
 $ mv *_trim* ../trimmed_fastq
@@ -348,7 +346,7 @@ SRR098027.fastq_trim.fastq  SRR098283.fastq_trim.fastq
 >> On Hydra window do:
 >>
 >> ~~~
->> $ fastqc ~/dc_workshop/data/trimmed_fastq
+>> $ fastqc /pool/genomics/username/dc_workshop/data/trimmed_fastq
 >> ~~~
 >> {: .bash}
 >>
@@ -356,7 +354,7 @@ SRR098027.fastq_trim.fastq  SRR098283.fastq_trim.fastq
 >>
 >> ~~~
 >> $ mkdir ~/Desktop/fastqc_html/trimmed
->> $ scp USER@hydra-login01:/pool/genomics/USER/dc_workshop/data/trimmed_fastq/*.html ~/Desktop/fastqc_html/trimmed
+>> $ scp username@hydra-login01:/pool/genomics/username/dc_workshop/data/trimmed_fastq/*.html ~/Desktop/fastqc_html/trimmed
 >> $ open ~/Desktop/fastqc_html/trimmed/*.html
 >> ~~~
 >> {: .bash}
