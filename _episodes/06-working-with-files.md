@@ -101,7 +101,7 @@ Lists every file in `/usr/bin` that ends in the characters `.sh`.
 > The root directory is the highest level directory in your file system and contains
 > files that are important for your computer to perform its daily work, but which you usually won't
 > have to interact with directly. In our case,
-> the root directory is two levels above our home directory, so `cd` or `cd ~` will take you to `/home/dcuser`
+> the root directory is two levels above our home directory, so `cd` or `cd ~` will take you to `/home/username`
 > and `cd /` will take you to `/`, which is equivalent to `~/../../`. Try not to worry if this is confusing,
 > it will all become clearer with practice.
 {: .callout}
@@ -206,10 +206,10 @@ This will print out all of the contents of the `SRR098026.fastq` to the screen.
 
 > ## Exercise
 >
-> 1. Print out the contents of the `~/dc_sample_data/untrimmed_fastq/SRR097977.fastq` file. What is the last line of the file?
+> 1. Print out the contents of the `/pool/genomics/username/dc_sample_data/untrimmed_fastq/SRR097977.fastq` file. What is the last line of the file?
 > 2.  From your home directory, and without changing directories,
 > use one short command to print the contents of all of the files in
-> the `~/dc_sample_data/untrimmed_fastq` directory.
+> the `/pool/genomics/username/dc_sample_data/untrimmed_fastq` directory.
 >
 > > ## Solution
 > > 1. The last line of the file is `TC:CCC::CCCCCCCC<8?6A:C28C<608'&&&,'$`.
@@ -424,7 +424,7 @@ $ ls -l
 {: .bash}
 
 ~~~
--rw-r--r-- 1 dcuser dcuser 43332 Nov 15 23:02 SRR098026-backup.fastq
+-rw-r--r-- 1 username username 43332 Nov 15 23:02 SRR098026-backup.fastq
 ~~~
 {: .output}
 
@@ -508,8 +508,8 @@ you will be asked whether you want to override your permission settings.
 > > It's always a good idea to check your work with `ls -l backup`. You should see something like:
 > >
 > > ~~~
-> > -r--r--r-- 1 dcuser dcuser 47552 Nov 15 23:06 SRR097977-backup.fastq
-> > -r--r--r-- 1 dcuser dcuser 43332 Nov 15 23:06 SRR098026-backup.fastq
+> > -r--r--r-- 1 username username 47552 Nov 15 23:06 SRR097977-backup.fastq
+> > -r--r--r-- 1 username username 43332 Nov 15 23:06 SRR098026-backup.fastq
 > > ~~~
 > > {: .output}
 > {: .solution}
