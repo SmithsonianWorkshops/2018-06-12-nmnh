@@ -288,7 +288,7 @@ genome=/pool/genomics/username/dc_workshop/data/ref_genome/ecoli_rel606.fasta
 > definition of your variable by typing into your script: echo $variable_name. 
 {: .callout}
 
-Next we will load the modules need for all steps.
+First we will load the modules need for all steps.
 
 ~~~
 module load bioinformatics/bwa
@@ -297,7 +297,7 @@ module load bioinformatics/bcftools
 ~~~
 {: .output}
 
-Now we will index our reference genome for BWA
+Next we will index our reference genome for BWA
 
 ~~~
 bwa index $genome
@@ -646,7 +646,7 @@ Let's do a few comparisons.
 variants are present in position 145? 
 > 
 > Hint: You can find a copy of the output files for the full-length trimmed FASTQ file variant calling in the 
-> `data/genomics/workshops/data_carpentry_genomics/dc_sampledata_lite/solutions/wrangling-solutions/variant_calling/` directory.
+> `/data/genomics/workshops/data_carpentry_genomics/dc_sampledata_lite/solutions/wrangling-solutions/variant_calling/` directory.
 > 
 >> ## Solution
 >> 
@@ -663,8 +663,7 @@ variants are present in position 145?
 > ## Bonus Exercise (Advanced)
 > 
 > If you have time after completing the previous two exercises, use `run_variant_calling.sh` to run the variant calling pipeline 
-> on the full-sized trimmed FASTQ files. You should have a copy of these already in `/pool/genomics/username/dc_workshop/data/trimmed_fastq` but if 
-> you dont, there is a copy in `/data/genomics/workshops/data_carpentry_genomics/dc_sampledata_lite/solutions/wrangling-solutions/trimmed_fastq`.
+> on the full-sized trimmed FASTQ files. You can find a copy of the files in `/data/genomics/workshops/data_carpentry_genomics/dc_sampledata_lite/solutions/wrangling-solutions/trimmed_fastq`.
 {: .challenge} 
 
 
