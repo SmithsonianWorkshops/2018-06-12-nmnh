@@ -473,7 +473,7 @@ read coverage
 7) call SNPs with bcftools:
 
 ~~~
-    bcftools view -bvcg $raw_bcf > $variants
+    bcftools call -vm -O b $raw_bcf > $variants
 ~~~
 {: .output}
 
@@ -524,7 +524,7 @@ for fq in /pool/genomics/username/dc_workshop/data/trimmed_fastq_small/*.fastq
     samtools sort -f $bam $sorted_bam
     samtools index $sorted_bam
     samtools mpileup -g -f $genome $sorted_bam > $raw_bcf
-    bcftools view -bvcg $raw_bcf > $variants
+    bcftools call -vm -O b $raw_bcf > $variants
     bcftools view $variants | vcfutils.pl varFilter - > $final_variants
     done
 ~~~
@@ -581,7 +581,7 @@ $ bash run_variant_calling.sh
 > Run the alignment
 > 
 > ~~~
-> $ bwa mem -M $genome $fq > $sam
+> $ bwa mem $genome $fq > $sam
 > ~~~
 > {: .bash}
 > 
