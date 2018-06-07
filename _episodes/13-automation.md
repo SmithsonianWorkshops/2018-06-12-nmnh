@@ -52,10 +52,11 @@ $ for filename in *.zip
 And here's the one you wrote for running Trimmomatic on all of our `.fastq` sample files.
 
 ~~~
+$ module load bioinformatics/trimmomatic
 $ for infile in *.fastq
 > do
-> outfile=${infile}_trim.fastq
-> java -jar ~/Trimmomatic-0.32/trimmomatic-0.32.jar SE $infile $outfile SLIDINGWINDOW:4:20 MINLEN:20
+> outfile="${infile}"_trim.fastq
+> runtrimmomatic SE -threads 1 "${infile}" "${outfile}" SLIDINGWINDOW:4:20 MINLEN:20
 > done
 ~~~
 {: .bash}
@@ -72,7 +73,7 @@ directory called `scripts/`. Previously, we used
 `nano` to create and open a new file. The command `touch` allows us to create a new file without opening that file.
 
 ~~~
-$ cd ~/dc_workshop
+$ cd /pool/genomics/username/dc_workshop
 $ mkdir scripts
 $ cd scripts
 $ touch read_qc.sh
@@ -98,7 +99,7 @@ Enter the following pieces of code into your shell script (not into your termina
 Our first line will move us into the `untrimmed_fastq/` directory when we run our script.
 
 ~~~
-cd ~/dc_workshop/data/untrimmed_fastq/
+cd /pool/genomics/username/dc_workshop/data/untrimmed_fastq/
 ~~~
 {: .output}
 
@@ -106,8 +107,9 @@ These next two lines will give us a status message to tell us that we are curren
 on all of the files in our current directory with a `.fastq` extension. 
 
 ~~~
+module load bioinformatics/fastqc
 echo "Running FastQC ..."
-~/FastQC/fastqc *.fastq
+fastqc *.fastq
 ~~~
 {: .output}
 
@@ -117,7 +119,7 @@ idea to use this option in your shell scripts to avoid running into errors if yo
 you do.'
 
 ~~~
-mkdir -p ~/dc_workshop/results/fastqc_untrimmed_reads
+mkdir -p /pool/genomics/username/dc_workshop/results/fastqc_untrimmed_reads
 ~~~
 {: .output}
 
@@ -126,15 +128,15 @@ with a `.zip` or a `.html` extension to the directory we just created for storin
 
 ~~~
 echo "Saving FastQC results..."
-mv *.zip ~/dc_workshop/results/fastqc_untrimmed_reads/
-mv *.html ~/dc_workshop/results/fastqc_untrimmed_reads/
+mv *.zip /pool/genomics/username/dc_workshop/results/fastqc_untrimmed_reads/
+mv *.html /pool/genomics/username/dc_workshop/results/fastqc_untrimmed_reads/
 ~~~
 {: .output}
 
 The next line moves us to the results directory where we've stored our output.
 
 ~~~
-cd ~/dc_workshop/results/fastqc_untrimmed_reads/
+cd /pool/genomics/username/dc_workshop/results/fastqc_untrimmed_reads/
 ~~~
 {: .output}
 
@@ -155,7 +157,7 @@ what we're doing.
 
 ~~~
 echo "Saving summary..."
-cat */summary.txt > ~/dc_workshop/docs/fastqc_summaries.txt
+cat */summary.txt > /pool/genomics/username/dc_workshop/docs/fastqc_summaries.txt
 ~~~
 {: .output}
 
@@ -169,18 +171,19 @@ cat */summary.txt > ~/dc_workshop/docs/fastqc_summaries.txt
 Your full shell script should now look like this:
 
 ~~~
-cd ~/dc_workshop/data/untrimmed_fastq/
+cd /pool/genomics/username/dc_workshop/data/untrimmed_fastq/
 
+module load bioinformatics/fastqc
 echo "Running FastQC ..."
-~/FastQC/fastqc *.fastq
+fastqc *.fastq
 
-mkdir -p ~/dc_workshop/results/fastqc_untrimmed_reads
+mkdir -p /pool/genomics/username/dc_workshop/results/fastqc_untrimmed_reads
 
 echo "Saving FastQC results..."
-mv *.zip ~/dc_workshop/results/fastqc_untrimmed_reads/
-mv *.html ~/dc_workshop/results/fastqc_untrimmed_reads/
+mv *.zip /pool/genomics/username/dc_workshop/results/fastqc_untrimmed_reads/
+mv *.html /pool/genomics/username/dc_workshop/results/fastqc_untrimmed_reads/
 
-cd ~/dc_workshop/results/fastqc_untrimmed_reads/
+cd /pool/genomics/username/dc_workshop/results/fastqc_untrimmed_reads/
 
 echo "Unzipping..."
 for filename in *.zip
@@ -189,7 +192,8 @@ for filename in *.zip
     done
 
 echo "Saving summary..."
-cat */summary.txt > ~/dc_workshop/docs/fastqc_summaries.txt
+cat */summary.txt > /pool/genomics/username/dc_workshop/docs/fastqc_summaries.txt
+echo "done"
 ~~~
 {: .output}
 
@@ -203,14 +207,9 @@ $ bash read_qc.sh
 ~~~
 Running FastQC ...
 Started analysis of SRR097977.fastq
-Approx 5% complete for SRR097977.fastq
-Approx 10% complete for SRR097977.fastq
-Approx 15% complete for SRR097977.fastq
-Approx 20% complete for SRR097977.fastq
-Approx 25% complete for SRR097977.fastq
-. 
-. 
-. 
+Analysis complete for SRR097977.fastq
+Started analysis of SRR098026.fastq
+Analysis complete for SRR098026.fastq
 ~~~
 {: .output}
 
@@ -245,7 +244,7 @@ We will be creating a script together to do all of these steps.
 First, we will create a new script in our `scripts/` directory using `touch`. 
 
 ~~~
-$ cd ~/dc_workshop/scripts
+$ cd /pool/genomics/username/dc_workshop/scripts
 $ touch run_variant_calling.sh
 $ ls 
 ~~~
@@ -270,7 +269,7 @@ First we will change our working directory so that we can create new results sub
 in the right location. 
 
 ~~~
-cd ~/dc_workshop/results
+cd /pool/genomics/username/dc_workshop/results
 ~~~
 {: .output}
 
@@ -278,7 +277,7 @@ Next we tell our script where to find the reference genome by assigning the `gen
 the path to our reference genome: 
 
 ~~~
-genome=~/dc_workshop/data/ref_genome/ecoli_rel606.fasta
+genome=/pool/genomics/username/dc_workshop/data/ref_genome/ecoli_rel606.fasta
 ~~~
 {: .output}
 
@@ -289,7 +288,16 @@ genome=~/dc_workshop/data/ref_genome/ecoli_rel606.fasta
 > definition of your variable by typing into your script: echo $variable_name. 
 {: .callout}
 
-Next we index our reference genome for BWA.
+Next we will load the modules need for all steps.
+
+~~~
+module load bioinformatics/bwa
+module load bioinformatics/samtools
+module load bioinformatics/bcftools
+~~~
+{: .output}
+
+Now we will index our reference genome for BWA
 
 ~~~
 bwa index $genome
@@ -311,7 +319,7 @@ The first thing we do is assign the name of the FASTQ file we're currently worki
 tell the script to `echo` the filename back to us so we can check which file we're on.
 
 ~~~
-for fq in ~/dc_workshop/data/trimmed_fastq_small/*.fastq
+for fq in /pool/genomics/username/dc_workshop/data/trimmed_fastq_small/*.fastq
     do
     echo "working with file $fq"
     done
@@ -341,21 +349,21 @@ for fq in ~/dc_workshop/data/trimmed_fastq_small/*.fastq
 >> {: .bash}
 >> 
 >> ~~~
->> [bwa_index] Pack FASTA... 0.04 sec
+>> [bwa_index] Pack FASTA... 0.07 sec
 >> [bwa_index] Construct BWT for the packed sequence...
->> [bwa_index] 1.10 seconds elapse.
->> [bwa_index] Update BWT... 0.03 sec
->> [bwa_index] Pack forward-only FASTA... 0.02 sec
->> [bwa_index] Construct SA from BWT and Occ... 0.64 sec
->> [main] Version: 0.7.5a-r405
->> [main] CMD: bwa index /home/dcuser/dc_workshop/data/ref_genome/ecoli_rel606.fasta
->> [main] Real time: 1.892 sec; CPU: 1.829 sec
->> working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR097977.fastq_trim.fastq
->> working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR098026.fastq_trim.fastq
->> working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR098027.fastq_trim.fastq
->> working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR098028.fastq_trim.fastq
->> working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR098281.fastq_trim.fastq
->> working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR098283.fastq_trim.fastq
+>> [bwa_index] 2.59 seconds elapse.
+>> [bwa_index] Update BWT... 0.05 sec
+>> [bwa_index] Pack forward-only FASTA... 0.04 sec
+>> [bwa_index] Construct SA from BWT and Occ... 0.66 sec
+>> [main] Version: 0.7.17-r1188
+>> [main] CMD: bwa index /pool/genomics/username/dc_workshop/data/ref_genome/ecoli_rel606.fasta
+>> [main] Real time: 3.727 sec; CPU: 3.424 sec
+>> working with file /pool/genomics/username/dc_workshop/data/trimmed_fastq_small/SRR097977.fastq_trim.fastq
+>> working with file /pool/genomics/username/dc_workshop/data/trimmed_fastq_small/SRR098026.fastq_trim.fastq
+>> working with file /pool/genomics/username/dc_workshop/data/trimmed_fastq_small/SRR098027.fastq_trim.fastq
+>> working with file /pool/genomics/username/dc_workshop/data/trimmed_fastq_small/SRR098028.fastq_trim.fastq
+>> working with file /pool/genomics/username/dc_workshop/data/trimmed_fastq_small/SRR098281.fastq_trim.fastq
+>> working with file /pool/genomics/username/dc_workshop/data/trimmed_fastq_small/SRR098283.fastq_trim.fastq
 >> ~~~
 >> {: .output}
 >> 
@@ -380,17 +388,17 @@ to a new variable called `base` variable. Add `done` again at the end so we can 
 Now if you save and run your script, the final lines of your output should look like this: 
 
 ~~~
-working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR097977.fastq_trim.fastq
+working with file /pool/genomics/username/dc_workshop/data/trimmed_fastq_small/SRR097977.fastq_trim.fastq
 base name is SRR097977
-working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR098026.fastq_trim.fastq
+working with file /pool/genomics/username/dc_workshop/data/trimmed_fastq_small/SRR098026.fastq_trim.fastq
 base name is SRR098026
-working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR098027.fastq_trim.fastq
+working with file /pool/genomics/username/dc_workshop/data/trimmed_fastq_small/SRR098027.fastq_trim.fastq
 base name is SRR098027
-working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR098028.fastq_trim.fastq
+working with file /pool/genomics/username/dc_workshop/data/trimmed_fastq_small/SRR098028.fastq_trim.fastq
 base name is SRR098028
-working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR098281.fastq_trim.fastq
+working with file /pool/genomics/username/dc_workshop/data/trimmed_fastq_small/SRR098281.fastq_trim.fastq
 base name is SRR098281
-working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR098283.fastq_trim.fastq
+working with file /pool/genomics/username/dc_workshop/data/trimmed_fastq_small/SRR098283.fastq_trim.fastq
 base name is SRR098283
 ~~~
 {: .output}
@@ -405,14 +413,14 @@ defined, and adding different file name extensions to represent the files that w
 Remember to delete the `done` line from your script before adding these lines.
 
 ~~~
-    fq=~/dc_workshop/data/trimmed_fastq_small/${base}.fastq_trim.fastq
-    sai=~/dc_workshop/results/sai/${base}_aligned.sai
-    sam=~/dc_workshop/results/sam/${base}_aligned.sam
-    bam=~/dc_workshop/results/bam/${base}_aligned.bam
-    sorted_bam=~/dc_workshop/results/bam/${base}_aligned_sorted.bam
-    raw_bcf=~/dc_workshop/results/bcf/${base}_raw.bcf
-    variants=~/dc_workshop/results/bcf/${base}_variants.bcf
-    final_variants=~/dc_workshop/results/vcf/${base}_final_variants.vcf     
+    fq=/pool/genomics/username/dc_workshop/data/trimmed_fastq_small/${base}.fastq_trim.fastq
+    sai=/pool/genomics/username/dc_workshop/results/sai/${base}_aligned.sai
+    sam=/pool/genomics/username/dc_workshop/results/sam/${base}_aligned.sam
+    bam=/pool/genomics/username/dc_workshop/results/bam/${base}_aligned.bam
+    sorted_bam=/pool/genomics/username/dc_workshop/results/bam/${base}_aligned_sorted.bam
+    raw_bcf=/pool/genomics/username/dc_workshop/results/bcf/${base}_raw.bcf
+    variants=/pool/genomics/username/dc_workshop/results/bcf/${base}_variants.bcf
+    final_variants=/pool/genomics/username/dc_workshop/results/vcf/${base}_final_variants.vcf
 ~~~
 {: .output}
 
@@ -472,7 +480,7 @@ read coverage
 8) filter the SNPs for the final output:
 
 ~~~
-    bcftools view $variants | /usr/share/samtools/vcfutils.pl varFilter - > $final_variants
+    bcftools view $variants | vcfutils.pl varFilter - > $final_variants
     done
 ~~~
 {: .output}
@@ -482,30 +490,34 @@ We added a `done` line after the SNP filtering step because this is the last ste
 Your script should now look like this:
 
 ~~~
-cd ~/dc_workshop/results
+cd /pool/genomics/username/dc_workshop/results
 
-genome=~/dc_workshop/data/ref_genome/ecoli_rel606.fasta
+genome=/pool/genomics/username/dc_workshop/data/ref_genome/ecoli_rel606.fasta
+
+module load bioinformatics/bwa
+module load bioinformatics/samtools
+module load bioinformatics/bcftools
 
 bwa index $genome
 
 mkdir -p sai sam bam bcf vcf
 
-for fq in ~/dc_workshop/data/trimmed_fastq_small/*.fastq
+for fq in /pool/genomics/username/dc_workshop/data/trimmed_fastq_small/*.fastq
     do
     echo "working with file $fq"
 
     base=$(basename $fq .fastq_trim.fastq)
     echo "base name is $base"
 
-    fq=~/dc_workshop/data/trimmed_fastq_small/$base.fastq_trim.fastq
-    sai=~/dc_workshop/results/sai/${base}_aligned.sai
-    sam=~/dc_workshop/results/sam/${base}_aligned.sam
-    bam=~/dc_workshop/results/bam/${base}_aligned.bam
-    sorted_bam=~/dc_workshop/results/bam/${base}_aligned_sorted.bam
-    raw_bcf=~/dc_workshop/results/bcf/${base}_raw.bcf
-    variants=~/dc_workshop/results/bcf/${base}_variants.bcf
-    final_variants=~/dc_workshop/results/vcf/${base}_final_variants.vcf 
-
+    fq=/pool/genomics/username/dc_workshop/data/trimmed_fastq_small/${base}.fastq_trim.fastq
+    sai=/pool/genomics/username/dc_workshop/results/sai/${base}_aligned.sai
+    sam=/pool/genomics/username/dc_workshop/results/sam/${base}_aligned.sam
+    bam=/pool/genomics/username/dc_workshop/results/bam/${base}_aligned.bam
+    sorted_bam=/pool/genomics/username/dc_workshop/results/bam/${base}_aligned_sorted.bam
+    raw_bcf=/pool/genomics/username/dc_workshop/results/bcf/${base}_raw.bcf
+    variants=/pool/genomics/username/dc_workshop/results/bcf/${base}_variants.bcf
+    final_variants=/pool/genomics/username/dc_workshop/results/vcf/${base}_final_variants.vcf    
+    
     bwa aln $genome $fq > $sai
     bwa samse $genome $sai $fq > $sam
     samtools view -S -b $sam > $bam
@@ -513,7 +525,7 @@ for fq in ~/dc_workshop/data/trimmed_fastq_small/*.fastq
     samtools index $sorted_bam
     samtools mpileup -g -f $genome $sorted_bam > $raw_bcf
     bcftools view -bvcg $raw_bcf > $variants
-    bcftools view $variants | /usr/share/samtools/vcfutils.pl varFilter - > $final_variants
+    bcftools view $variants | vcfutils.pl varFilter - > $final_variants
     done
 ~~~
 {: .output}
@@ -589,12 +601,12 @@ Let's do a few comparisons.
 > script on?
 >
 > Hint: You can find a copy of the full-sized trimmed 
-> FASTQ files in the `~/.dc_sampledata_lite/solutions/wrangling-solutions/trimmed_fastq` directory.
+> FASTQ files in the `/data/genomics/workshops/data_carpentry_genomics/dc_sampledata_lite/solutions/wrangling-solutions/trimmed_fastq` directory.
 > 
 > > ## Solution
 > > 
 > > ~~~
-> > $ ls -lh ~/.dc_sampledata_lite/solutions/wrangling-solutions/trimmed_fastq
+> > $ ls -lh /data/genomics/workshops/data_carpentry_genomics/dc_sampledata_lite/solutions/wrangling-solutions/trimmed_fastq
 > > ~~~
 > > {: .bash}
 > > 
@@ -604,7 +616,7 @@ Let's do a few comparisons.
 > > {: .output}
 > > 
 > > ~~~
-> > $ ls -lh ~/dc_workshop/data/trimmed_fastq_small
+> > $ ls -lh /pool/genomics/username/dc_workshop/data/trimmed_fastq_small
 > > ~~~
 > > {: .bash}
 > > 
@@ -623,7 +635,7 @@ Let's do a few comparisons.
 >> ## Solution
 >> 
 >> ~~~
->> $ samtools tview ~/dc_workshop/results/bam/SRR098281_aligned_sorted.bam ~/dc_workshop/data/ref_genome/ecoli_rel606.fasta
+>> $ samtools tview /pool/genomics/username/dc_workshop/results/bam/SRR098281_aligned_sorted.bam /pool/genomics/username/dc_workshop/data/ref_genome/ecoli_rel606.fasta
 >> ~~~
 >> {: .bash}
 >> 
@@ -634,12 +646,12 @@ Let's do a few comparisons.
 variants are present in position 145? 
 > 
 > Hint: You can find a copy of the output files for the full-length trimmed FASTQ file variant calling in the 
-> `~/.dc_sampledata_lite/solutions/wrangling-solutions/variant_calling/` directory.
+> `data/genomics/workshops/data_carpentry_genomics/dc_sampledata_lite/solutions/wrangling-solutions/variant_calling/` directory.
 > 
 >> ## Solution
 >> 
 >> ~~~
->> $ samtools tview ~/.dc_sampledata_lite/solutions/wrangling-solutions/variant_calling/bam/SRR098281_aligned_sorted.bam ~/dc_workshop/data/ref_genome/ecoli_rel606.fasta
+>> $ samtools tview /data/genomics/workshops/data_carpentry_genomics/dc_sampledata_lite/solutions/wrangling-solutions/variant_calling/bam/SRR098281_aligned_sorted.bam /pool/genomics/username/dc_workshop/data/ref_genome/ecoli_rel606.fasta
 >> ~~~
 >> {: .bash}
 >> 
@@ -651,8 +663,8 @@ variants are present in position 145?
 > ## Bonus Exercise (Advanced)
 > 
 > If you have time after completing the previous two exercises, use `run_variant_calling.sh` to run the variant calling pipeline 
-> on the full-sized trimmed FASTQ files. You should have a copy of these already in `~/dc_workshop/data/trimmed_fastq` but if 
-> you dont, there is a copy in `~/.dc_sampledata_lite/solutions/wrangling-solutions/trimmed_fastq`.
+> on the full-sized trimmed FASTQ files. You should have a copy of these already in `/pool/genomics/username/dc_workshop/data/trimmed_fastq` but if 
+> you dont, there is a copy in `/data/genomics/workshops/data_carpentry_genomics/dc_sampledata_lite/solutions/wrangling-solutions/trimmed_fastq`.
 {: .challenge} 
 
 
