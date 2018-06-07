@@ -30,12 +30,12 @@ sequences against a large reference genome. The alignment process consists of tw
 
 # Setting up
 
-First we will copy the reference genome data into our `data/` directory, as well as a set of trimmed FASTQ files to work with. These are small subsets of our real trimmed data, 
-and will enable us to run our variant calling workflow quite quickly. 
+First we will copy the reference genome data into our `data/` directory, as well as a set of trimmed FASTQ files to work with in this lesson, and a set of untrimmed files for the next one.  
 ~~~
 $ cd /pool/genomics/username/dc_workshop
 $ cp -r /data/genomics/workshops/data_carpentry_genomics/dc_sampledata_lite/ref_genome/ data/
 $ cp -r /data/genomics/workshops/data_carpentry_genomics/dc_sampledata_lite/trimmed_fastq_small/ data/
+$ cp -r /data/genomics/workshops/data_carpentry_genomics/dc_sampledata_lite/untrimmed_fastq/ data/
 ~~~
 {: .bash}
 
