@@ -179,7 +179,7 @@ The `cd` command works in a similar way.
 Try entering:
 
 ~~~
-$ cd
+$ cd /pool/genomics/username
 $ cd dc_sample_data/untrimmed_fastq
 ~~~
 {: .bash}
@@ -195,7 +195,7 @@ the intermediate directory.
 > > ## Solution
 > >
 > > ~~~
-> > $ cd
+> > $ cd /pool/genomics/username
 > > $ ls dc_sample_data/untrimmed_fastq/
 > > ~~~
 > > {: .bash}
