@@ -162,7 +162,7 @@ i.e.,
 the directory that the computer assumes we want to run commands in
 unless we explicitly specify something else.
 Here,
-the computer's response is `/home/USER`,
+the computer's response is `/home/username`,
 which is your home directory:
 
 ~~~
@@ -177,7 +177,7 @@ $ pwd
 
 Let's look at how our file system is organized.  
 
-On Hydra, we ask that users run jobs from their `/pool`, `/scratch`, or `/data` directories (e.g. `/pool/genomics/USER`).
+On Hydra, we ask that users run jobs from their `/pool`, `/scratch`, or `/data` directories (e.g. `/pool/genomics/username`).
 
 We will be using files located in `/data/genomics/workshops/data_carpentry_genomics`
 
