@@ -77,15 +77,15 @@ $ bwa index data/ref_genome/ecoli_rel606.fasta
 While the index is created, you will see output something like this:
 
 ~~~
-[bwa_index] Pack FASTA... 0.04 sec
+[bwa_index] Pack FASTA... 0.07 sec
 [bwa_index] Construct BWT for the packed sequence...
-[bwa_index] 1.05 seconds elapse.
+[bwa_index] 1.83 seconds elapse.
 [bwa_index] Update BWT... 0.03 sec
-[bwa_index] Pack forward-only FASTA... 0.02 sec
-[bwa_index] Construct SA from BWT and Occ... 0.54 sec
-[main] Version: 0.7.5a-r405
+[bwa_index] Pack forward-only FASTA... 0.05 sec
+[bwa_index] Construct SA from BWT and Occ... 0.64 sec
+[main] Version: 0.7.17-r1188
 [main] CMD: bwa index data/ref_genome/ecoli_rel606.fasta
-[main] Real time: 1.736 sec; CPU: 1.688 sec
+[main] Real time: 2.801 sec; CPU: 2.627 sec
 ~~~
 {: .output}
 
@@ -130,8 +130,7 @@ You will see output that starts like this:
 [bwa_aln] 157bp reads: max_diff = 7
 [bwa_aln] 190bp reads: max_diff = 8
 [bwa_aln] 225bp reads: max_diff = 9
-[bwa_aln_core] calculate SA coordinate... 5.10 sec
-[bwa_aln_core] write to the disk... 0.02 sec
+[bwa_aln_core] calculate SA coordinate... 8.56 sec
 ~~~
 {: .output}
 
@@ -188,10 +187,14 @@ $ bwa samse data/ref_genome/ecoli_rel606.fasta \
 Your output will start out something like this: 
 
 ~~~
-[bwa_aln_core] convert to sequence coordinate... 0.70 sec
+bwa_aln_core] convert to sequence coordinate... 1.03 sec
+[bwa_aln_core] refine gapped alignments... 0.17 sec
+[bwa_aln_core] print alignments... 0.65 sec
+[bwa_aln_core] 262144 sequences have been processed.
+[bwa_aln_core] convert to sequence coordinate... 0.58 sec
 [bwa_aln_core] refine gapped alignments... 0.09 sec
 [bwa_aln_core] print alignments... 0.37 sec
-[bwa_aln_core] 262144 sequences have been processed.
+[bwa_aln_core] 406070 sequences have been processed.
 ~~~
 {: .output}
 
@@ -248,7 +251,6 @@ $ samtools mpileup -g -f data/ref_genome/ecoli_rel606.fasta \
 {: .bash}
 
 ~~~
-[fai_load] build FASTA index.
 [mpileup] 1 samples in 1 input files
 <mpileup> Set max per-file depth to 8000
 ~~~
@@ -273,7 +275,7 @@ Filter the SNPs for the final output in VCF format, using `vcfutils.pl`:
 
 ~~~
 $ bcftools view results/bcf/SRR097977_variants.bcf | \
-$ vcfutils.pl varFilter - > results/vcf/SRR097977_final_variants.vcf
+  vcfutils.pl varFilter - > results/vcf/SRR097977_final_variants.vcf
 ~~~
 {: .bash}
 
