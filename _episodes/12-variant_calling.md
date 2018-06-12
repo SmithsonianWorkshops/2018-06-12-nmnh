@@ -35,7 +35,6 @@ First we will copy the reference genome data into our `data/` directory, as well
 $ cd /pool/genomics/username/dc_workshop
 $ cp -r /data/genomics/workshops/data_carpentry_genomics/dc_sampledata_lite/ref_genome/ data/
 $ cp -r /data/genomics/workshops/data_carpentry_genomics/dc_sampledata_lite/trimmed_fastq_small/ data/
-$ cp -r /data/genomics/workshops/data_carpentry_genomics/dc_sampledata_lite/untrimmed_fastq/ data/
 ~~~
 {: .bash}
 
