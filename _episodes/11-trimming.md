@@ -104,7 +104,7 @@ $ runtrimmomatic SE
 However, a complete command for Trimmomatic will look something like this:
 
 ~~~
-$ runtrimmomatic SE -threads <TBD> -phred64 SRR_1056.fastq SRR_1056_trimmed.fastq ILLUMINACLIP:SRR_adapters.fa SLIDINGWINDOW:4:20
+$ runtrimmomatic SE -threads 1 -phred64 SRR_1056.fastq SRR_1056_trimmed.fastq ILLUMINACLIP:SRR_adapters.fa SLIDINGWINDOW:4:20
 ~~~
 {: .bash}
 
@@ -139,7 +139,7 @@ discard any reads that do not have at least 20 bases remaining after
 this trimming step.
 
 ~~~
-$ runtrimmomatic SE -threads <TBD> SRR098283.fastq SRR098283.fastq_trim.fastq SLIDINGWINDOW:4:20 MINLEN:20
+$ runtrimmomatic SE -threads 1 SRR098283.fastq SRR098283.fastq_trim.fastq SLIDINGWINDOW:4:20 MINLEN:20
 ~~~
 {: .bash}
 
