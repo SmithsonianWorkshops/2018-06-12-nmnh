@@ -229,7 +229,62 @@ exercise, we will use the `surveys.csv` data set, with the `NA` values removed.
 
 ### Plotnine Scatterplot
 
-### Plotnine Boxplot
+
+```python
+(p9.ggplot(data=ecoli,
+           mapping=p9.aes(x = 'sample', y= 'genome_size'))
+ + p9.geom_point()
+)
+```
+
+
+![png](../fig/output_19_0.png)
+
+
+
+
+
+    <ggplot: (-9223372029321576718)>
+
+
+
+
+```python
+(p9.ggplot(data=ecoli,
+           mapping=p9.aes(x = 'sample', y= 'genome_size'))
+ + p9.geom_point(alpha=0.5, color='blue')
+ + p9.theme(axis_text_x = p9.element_text(angle=45, hjust=1))
+)
+```
+
+
+![png](../fig/output_20_0.png)
+
+
+
+
+
+    <ggplot: (-9223372029308153123)>
+
+
+
+
+```python
+(p9.ggplot(data=ecoli,
+           mapping=p9.aes(x = 'sample', y= 'genome_size', color='generation'))
+ + p9.geom_point(alpha=0.5)
+ + p9.theme(axis_text_x = p9.element_text(angle=45, hjust=1))
+)
+```
+
+
+![png](../fig/output_21_0.png)
+
+
+
+
+
+    <ggplot: (7546764513)>
 
 
 
