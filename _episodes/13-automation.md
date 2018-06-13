@@ -414,13 +414,14 @@ Remember to delete the `done` line from your script before adding these lines.
 
 ~~~
     fq=/pool/genomics/username/dc_workshop/data/trimmed_fastq_small/${base}.fastq_trim.fastq
-    sai=/pool/genomics/username/dc_workshop/results/sai/${base}_aligned.sai
-    sam=/pool/genomics/username/dc_workshop/results/sam/${base}_aligned.sam
-    bam=/pool/genomics/username/dc_workshop/results/bam/${base}_aligned.bam
-    sorted_bam=/pool/genomics/username/dc_workshop/results/bam/${base}_aligned_sorted.bam
-    raw_bcf=/pool/genomics/username/dc_workshop/results/bcf/${base}_raw.bcf
-    variants=/pool/genomics/username/dc_workshop/results/bcf/${base}_variants.bcf
-    final_variants=/pool/genomics/username/dc_workshop/results/vcf/${base}_final_variants.vcf
+    results=/pool/genomics/username/dc_workshop/results/
+    sai=${results}/sai/${base}_aligned.sai
+    sam=${results}/sam/${base}_aligned.sam
+    bam=${results}/bam/${base}_aligned.bam
+    sorted_bam=${results}/bam/${base}_aligned_sorted.bam
+    raw_bcf=${results}/bcf/${base}_raw.bcf
+    variants=${results}/bcf/${base}_variants.bcf
+    final_variants=${results}/vcf/${base}_final_variants.vcf
 ~~~
 {: .output}
 
@@ -510,13 +511,14 @@ for fq in /pool/genomics/username/dc_workshop/data/trimmed_fastq_small/*.fastq
     echo "base name is $base"
 
     fq=/pool/genomics/username/dc_workshop/data/trimmed_fastq_small/${base}.fastq_trim.fastq
-    sai=/pool/genomics/username/dc_workshop/results/sai/${base}_aligned.sai
-    sam=/pool/genomics/username/dc_workshop/results/sam/${base}_aligned.sam
-    bam=/pool/genomics/username/dc_workshop/results/bam/${base}_aligned.bam
-    sorted_bam=/pool/genomics/username/dc_workshop/results/bam/${base}_aligned_sorted.bam
-    raw_bcf=/pool/genomics/username/dc_workshop/results/bcf/${base}_raw.bcf
-    variants=/pool/genomics/username/dc_workshop/results/bcf/${base}_variants.bcf
-    final_variants=/pool/genomics/username/dc_workshop/results/vcf/${base}_final_variants.vcf    
+    results=/pool/genomics/username/dc_workshop/results/
+    sai=${results}/sai/${base}_aligned.sai
+    sam=${results}/sam/${base}_aligned.sam
+    bam=${results}/bam/${base}_aligned.bam
+    sorted_bam=${results}/bam/${base}_aligned_sorted.bam
+    raw_bcf=${results}/bcf/${base}_raw.bcf
+    variants=${results}/bcf/${base}_variants.bcf
+    final_variants=${results}/vcf/${base}_final_variants.vcf    
     
     bwa aln $genome $fq > $sai
     bwa samse $genome $sai $fq > $sam
