@@ -451,7 +451,7 @@ your script and add the following lines.
 4) sort the BAM file:
 
 ~~~
-    samtools sort -f $bam $sorted_bam
+    samtools sort $bam > $sorted_bam
 ~~~
 {: .output}
 
@@ -521,7 +521,7 @@ for fq in /pool/genomics/username/dc_workshop/data/trimmed_fastq_small/*.fastq
     bwa aln $genome $fq > $sai
     bwa samse $genome $sai $fq > $sam
     samtools view -S -b $sam > $bam
-    samtools sort -f $bam $sorted_bam
+    samtools sort $bam > $sorted_bam
     samtools index $sorted_bam
     samtools mpileup -g -f $genome $sorted_bam > $raw_bcf
     bcftools call -vm -O b $raw_bcf > $variants
