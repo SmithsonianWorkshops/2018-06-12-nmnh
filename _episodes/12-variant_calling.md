@@ -166,6 +166,17 @@ displayed below with the different fields highlighted.
 
 ![sam_bam2](../img/sam_bam3.png)
 
+> ## Better viewing of tab delminated files
+> 
+> Tab seperated files can sometimes be hard to view in the terminal.
+> You may find that the headers don't line up with columns and that long lines wrap to the next line.
+> Try using `less -S -x10 filename` to view the file.
+> `-S` causes less to not wrap long lines, use the left and right arrow keys to see more of the line.
+> `-x10` expands how many spaces each tab displays as to 10 character which will help the columns to line up.
+> You can try larger values for x to make the columns wider.
+>
+{: .callout}
+
 First we will use the `bwa samse` command to convert the .sai file to SAM format. The usage for `bwa samse` is 
 
 ~~~
